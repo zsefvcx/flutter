@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage>  createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<String> nav = ['Список 1', 'Список 2'];
+  final List<String> nav = ['Список 1', 'Список 2',];
   final List fakeData = List.generate(100, (index) => index.toString());
 
   Map<String, dynamic> data = {
@@ -54,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'https://picsum.photos/1200/518',
       'https://picsum.photos/1200/519',
       'https://picsum.photos/1200/520',
-    ]
+    ],
   };
 
   @override
@@ -63,16 +67,21 @@ class _MyHomePageState extends State<MyHomePage> {
       length: nav.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Homework example'),
+          title: const Text('Homework example'),
+          bottom: TabBar(
+            tabs: [
+              ...Iterable<int>.generate(nav.length).map((int index) => Tab(text: nav[index]),),
+            ],
+          ),
         ),
         body: TabBarView(
           children: nav.map((name) {
             return ListView(
               key: PageStorageKey(name),
-              children: <Widget>[
+              children: [
                 ...fakeData.map((e) {
-                  return Text(e);
-                }).toList()
+                  return Text('$e');
+                }).toList(),
               ],
             );
           }).toList(),
