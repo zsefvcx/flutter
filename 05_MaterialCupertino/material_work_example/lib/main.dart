@@ -83,8 +83,6 @@ final List<DrawerItem> _drawerItem = [
   ),
 ];
 
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -245,6 +243,12 @@ class _MyHomePageState extends State<MyHomePage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      print('Listener ${_tabController.index}');
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    });
   }
 
   @override
@@ -255,6 +259,35 @@ class _MyHomePageState extends State<MyHomePage>
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: (){
+                _scaffoldKey.currentState?.openEndDrawer();
+              }, )
+
+        ],
+      ),
+
+      endDrawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 60,
+                backgroundColor: drawerBottomSheetColor,
+                backgroundImage: const NetworkImage('http://chemodan-turov.ru/wp-content/uploads/2020/12/Moskva-2021-2.jpg'),
+                //child: const Text('User'),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('User'),
+              ),
+            ],
+          ),
+        ),
       ),
 
       drawer: Drawer(
@@ -271,13 +304,9 @@ class _MyHomePageState extends State<MyHomePage>
                       child: CircleAvatar(
                         radius: 60,
                         backgroundColor: drawerBottomSheetColor,
-                        backgroundImage: const NetworkImage('http://chemodan-turov.ru/wp-content/uploads/2020/12/Moskva-2021-2.jpg'),
+                        backgroundImage: const NetworkImage('https://vsegda-pomnim.com/uploads/posts/2022-04/1651030272_58-vsegda-pomnim-com-p-krasnoe-more-khurgada-foto-62.jpg'),
                         //child: const Text('User'),
                       ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('User'),
                   ),
                   ..._drawerItem.map((e) => ListTile(
                     leading: e.leading,
@@ -311,18 +340,20 @@ class _MyHomePageState extends State<MyHomePage>
 
       body: GestureDetector(
         onTap: onTapGestureDetector,
-        child: TabBarView(
-          controller: _tabController,
-          children: [
-            ..._tabItemsBar.map(
-              (e) => Container(
-                color: e.color,
-                child: Center(
-                  child: Text(e.title),
+        child: SafeArea(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              ..._tabItemsBar.map(
+                (e) => Container(
+                  color: e.color,
+                  child: Center(
+                    child: Text(e.title),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
 
