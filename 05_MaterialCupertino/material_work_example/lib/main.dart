@@ -34,6 +34,57 @@ final List<TabItem> _tabItemsBar = [
   ),
 ];
 
+class DrawerItem {
+  String title;
+  Icon leading;
+  Icon trailing;
+  void Function() onTap;
+
+  DrawerItem({
+    required this.title,
+    required this.leading,
+    required this.trailing,
+    required this.onTap,
+  });
+}
+
+final List<DrawerItem> _drawerItem = [
+  DrawerItem(
+    title: 'Home',
+    leading: const Icon(Icons.home),
+    trailing: const Icon(Icons.navigate_next),
+    onTap: (){
+      print('Home');
+    }
+  ),
+  DrawerItem(
+      title: 'Profile',
+      leading: const Icon(Icons.person_2_outlined),
+      trailing: const Icon(Icons.navigate_next),
+      onTap: (){
+        print('Profile');
+      }
+  ),
+  DrawerItem(
+      title: 'Images',
+      leading: const Icon(Icons.image),
+      trailing: const Icon(Icons.navigate_next),
+      onTap: (){
+        print('Images');
+      }
+  ),
+  DrawerItem(
+      title: 'Files',
+      leading: const Icon(Icons.file_copy_outlined),
+      trailing: const Icon(Icons.navigate_next),
+      onTap: (){
+        print('Files');
+      }
+  ),
+];
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -67,6 +118,8 @@ class _MyHomePageState extends State<MyHomePage>
 
   final Color bottomAppBarColor = Colors.white12;
   final Color bottomBottomSheetColor = Colors.white12;
+  final Color drawerBottomSheetColor = Colors.white12;
+
 
   late TabController _tabController;
 
@@ -128,7 +181,6 @@ class _MyHomePageState extends State<MyHomePage>
             ),
           ),
           );
-
       // _controller = _scaffoldKey.currentState?.showBottomSheet(
       //   constraints: const BoxConstraints(maxWidth: double.infinity),
       //   (context) => Container(
@@ -204,14 +256,59 @@ class _MyHomePageState extends State<MyHomePage>
         title: Text(widget.title),
         centerTitle: true,
       ),
-      drawer: const Drawer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(child: Text('Drawer')),
-          ],
+
+      drawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  DrawerHeader(
+                    padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: drawerBottomSheetColor,
+                        backgroundImage: const NetworkImage('http://chemodan-turov.ru/wp-content/uploads/2020/12/Moskva-2021-2.jpg'),
+                        //child: const Text('User'),
+                      ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('User'),
+                  ),
+                  ..._drawerItem.map((e) => ListTile(
+                    leading: e.leading,
+                    title: Text(e.title),
+                    trailing: e.trailing,
+                    onTap: e.onTap,
+                  )),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    child: const Text('Выход'),
+                    onPressed: () {
+                      print('Выход.');
+                    },
+                  ),
+                  ElevatedButton(
+                    child: const Text('Регистрация'),
+                    onPressed: () {
+                      print('Регистрация.');
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
+
       body: GestureDetector(
         onTap: onTapGestureDetector,
         child: TabBarView(
@@ -228,6 +325,7 @@ class _MyHomePageState extends State<MyHomePage>
           ],
         ),
       ),
+
       bottomNavigationBar: Visibility(
         visible: _visibilityElement,
         child: BottomAppBar(
@@ -262,7 +360,9 @@ class _MyHomePageState extends State<MyHomePage>
           ),
         ),
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
       floatingActionButton: Visibility(
         visible: _visibilityElement,
         child: FloatingActionButton(
