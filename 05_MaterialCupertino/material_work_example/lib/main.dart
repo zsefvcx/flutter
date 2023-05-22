@@ -86,7 +86,6 @@ final List<DrawerItem> _drawerItem = [
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -117,16 +116,10 @@ class _MyHomePageState extends State<MyHomePage>
   final Color bottomAppBarColor = Colors.white12;
   final Color bottomBottomSheetColor = Colors.white12;
   final Color drawerBottomSheetColor = Colors.white12;
-
-
   late TabController _tabController;
-
   int _currentTabIndex = 0;
-
   final bool _visibilityElement = true;
-
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   PersistentBottomSheetController? _controller;
 
   void toggleBottomSheet() {
@@ -283,7 +276,7 @@ class _MyHomePageState extends State<MyHomePage>
               ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('User'),
+                child: Text('User Userovich'),
               ),
             ],
           ),
@@ -397,6 +390,7 @@ class _MyHomePageState extends State<MyHomePage>
       floatingActionButton: Visibility(
         visible: _visibilityElement,
         child: FloatingActionButton(
+          mini: true,
           onPressed: toggleBottomSheet,
           tooltip: 'Show Bottom Sheet',
           child: const Icon(Icons.add),
