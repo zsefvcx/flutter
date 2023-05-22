@@ -1,4 +1,4 @@
-name: material_work_example
+name: list_view_divider
 description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -40,9 +40,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/
-    - assets/img/
+  #assets:
+  #  - assets/
+  #  - assets/img/
   # fonts:
   #   - family: Schyler
   #     fonts:
