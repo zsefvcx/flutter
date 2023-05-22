@@ -64,6 +64,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+
   final Color bottomAppBarColor = Colors.white12;
   final Color bottomBottomSheetColor = Colors.white12;
 
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   int _currentTabIndex = 0;
 
-  bool _visibilityElement = true;
+  final bool _visibilityElement = true;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -79,52 +80,98 @@ class _MyHomePageState extends State<MyHomePage>
 
   void toggleBottomSheet() {
     if (_controller == null) {
-      setState(() {
-        _visibilityElement = false;
-      });
-      _controller = _scaffoldKey.currentState?.showBottomSheet(
-        constraints: const BoxConstraints(maxWidth: double.infinity),
-        (context) => Container(
-          color: bottomBottomSheetColor,
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.credit_card),
-                        Text('Сумма'),
-                      ],
-                    ),
-                    SizedBox(width: 200,),
-                    Text('200 руб'),
-                  ],
-                ),
-                const SizedBox(height: 50,),
-                Center(
-                  child: ElevatedButton(
-                    child: const Text('Оплатить'),
-                    onPressed: () {
-                      print('Оплачено.');
-                      toggleBottomSheet();
-                      setState(() {
-                        _visibilityElement = true;
-                      });
-                    },
+      // setState(() {
+      //   _visibilityElement = false;
+      // });
+
+      showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context) => Container(
+            color: bottomBottomSheetColor,
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.credit_card),
+                          Text('Сумма'),
+                        ],
+                      ),
+                      SizedBox(width: 200,),
+                      Text('200 руб'),
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 50,),
+                  Center(
+                    child: ElevatedButton(
+                      child: const Text('Оплатить'),
+                      onPressed: () {
+                        print('Оплачено.');
+                        Navigator.pop(context);
+                        //toggleBottomSheet();
+                        // setState(() {
+                        //   _visibilityElement = true;
+                        // });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+          );
+
+      // _controller = _scaffoldKey.currentState?.showBottomSheet(
+      //   constraints: const BoxConstraints(maxWidth: double.infinity),
+      //   (context) => Container(
+      //     color: bottomBottomSheetColor,
+      //     height: 200,
+      //     child: Padding(
+      //       padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 40.0),
+      //       child: Column(
+      //         mainAxisAlignment: MainAxisAlignment.start,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           const Row(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             crossAxisAlignment: CrossAxisAlignment.center,
+      //             children: [
+      //               Row(
+      //                 children: [
+      //                   Icon(Icons.credit_card),
+      //                   Text('Сумма'),
+      //                 ],
+      //               ),
+      //               SizedBox(width: 200,),
+      //               Text('200 руб'),
+      //             ],
+      //           ),
+      //           const SizedBox(height: 50,),
+      //           Center(
+      //             child: ElevatedButton(
+      //               child: const Text('Оплатить'),
+      //               onPressed: () {
+      //                 print('Оплачено.');
+      //                 toggleBottomSheet();
+      //                 setState(() {
+      //                   _visibilityElement = true;
+      //                 });
+      //               },
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // );
     } else {
       _controller?.close();
       _controller = null;
@@ -132,14 +179,14 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   void onTapGestureDetector() {
-    if (_controller != null) {
-      _controller?.close();
-      _controller = null;
-      setState(() {
-        _visibilityElement = true;
-      });
-      print('Отмена.');
-    }
+    // if (_controller != null) {
+    //   _controller?.close();
+    //   _controller = null;
+    //   setState(() {
+    //     _visibilityElement = true;
+    //   });
+    //   print('Отмена.');
+    // }
   }
 
   @override
