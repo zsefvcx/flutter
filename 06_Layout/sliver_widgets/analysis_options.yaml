@@ -1,0 +1,82 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # https://dart-lang.github.io/linter/lints/index.html.
+  rules:
+    - always_declare_return_types
+    - always_require_non_null_named_parameters
+#    - cancel_subscriptions
+#    - close_sinks
+#    - comment_references
+#    - one_member_abstracts
+#    - only_throw_errors
+#    - package_api_docs
+#    - prefer_final_in_for_each
+#    - prefer_single_quotes
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+
+#Excluding files
+analyzer:
+  exclude:
+    - test/**
+  #  - lib/client.dart
+  #  - lib/server/*.g.dart
+
+  #Enabling stricter type checks
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  plugins:
+    #flutter pub add --dev dart_code_metrics
+    - dart_code_metrics
+  #Changing the severity of rules
+  errors:
+    invalid_assignment: warning
+    missing_return: error
+    dead_code: info
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    maximum-nesting-level: 5
+  metrics-exclude:
+    - test/**
+  rules-exclude:
+    - test/**
+  rules:
+    - avoid-double-slash-imports
+    - avoid-duplicate-exports
+    - avoid-dynamic
+    - avoid-nested-conditional-expressions
+    - avoid-non-null-assertion
+    - avoid-redundant-async
+    - avoid-unnecessary-conditionals
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - list-all-equatable-fields
+    - no-boolean-literal-compare
+    - prefer-enums-by-name
+    - prefer-first
+    - prefer-last
+    - prefer-immediate-return
+    - prefer-match-file-name
+    - prefer-moving-to-variable
+    - avoid-cascade-after-if-null
+    - binary-expression-operand-order
+    - double-literal-format
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - no-object-declaration
+    - prefer-conditional-expressions
+    - prefer-trailing-comma
+    - always-remove-listener
+    - avoid-returning-widgets
+    - avoid-shrink-wrap-in-lists
+    - prefer-correct-edge-insets-constructor
+
