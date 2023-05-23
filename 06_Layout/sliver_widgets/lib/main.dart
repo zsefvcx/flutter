@@ -45,6 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
+              actions: [
+                IconButton(onPressed: () {
+
+                },
+                icon: const Icon(Icons.account_tree_outlined)),
+              ],
               expandedHeight: 250,
               floating: false,
               pinned: true,
@@ -56,23 +62,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 16.0
                   ),
                 ),
-                background: Container(
-                  height: 250,
-                  width: double.infinity,
-                  child: Stack(
-                    children:[
-                      Image.network(
+                background: Stack(
+                  children:[
+                    SizedBox(
+                      height: 250,
+                      width: double.infinity,
+                      child: Image.network(
                         'https://otkritkis.com/wp-content/uploads/2021/12/5308793.jpg',
-                        fit: BoxFit.contain,
-                        height: 250,
-                        width: double.infinity,
+                        fit: BoxFit.cover,
                       ),
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                    ],
-                  ),
-                ),                
+                    ),
+                    Container(
+                       color: Colors.black.withOpacity(0.5),
+                    ),
+                  ],
+               ),
               ),
             ),
             SliverGrid.count(
