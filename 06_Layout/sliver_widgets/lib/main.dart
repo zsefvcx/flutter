@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
         //useMaterial3: true,
       ),
       home: const MyHomePage(title: 'sliver widgets'),
