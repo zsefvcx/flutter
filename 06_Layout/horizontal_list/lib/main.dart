@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -32,10 +31,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Widget> data0 = [
-        ...List.generate(500, (index) => CustomWidgetContainer(
+
+
+  final double minSizeWidth = 500;
+
+  List<Widget> data0 = [
+        ...List.generate(1000, (index) => CustomWidgetContainer(
           index: index,
-          visibleDivider: false,
         ),
       ),
     ];
@@ -44,9 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     // Full screen width and height
-    double width = MediaQuery.of(context).size.width;//ширина
+    //double width = MediaQuery.of(context).size.width;//ширина
     //double height = MediaQuery.of(context).size.height;//высота
-    bool typeWidth = width<500;
+    //bool typeWidth = width<500;
     // // Height (without SafeArea)
     // var padding = MediaQuery.of(context).viewPadding;
     // double height1 = height - padding.top - padding.bottom;
@@ -63,16 +65,17 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          Expanded(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          double width = constraints.constrainWidth();
+          return SizedBox(
+            height: width <= minSizeWidth?62:double.infinity,
             child: ListView.builder(
-              scrollDirection: typeWidth?Axis.horizontal:Axis.vertical,
-                padding: const EdgeInsets.all(8),
-                itemCount: data0.length,
-                itemBuilder: (context, int index) => data0[index]),
-          ),
-        ],
+                 scrollDirection: width <= minSizeWidth?Axis.horizontal:Axis.vertical,
+                 itemCount: data0.length,
+                 itemBuilder: (context, int index) => data0[index]),
+          );
+        },
       ),
     );
   }
@@ -80,14 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class CustomWidgetContainer extends StatefulWidget {
   final int _index;
-  final bool _visibleDivider;
 
   const CustomWidgetContainer({
     super.key,
     required int index,
     bool visibleDivider = false,
-  })  : _index = index,
-        _visibleDivider = visibleDivider;
+  })  : _index = index;
 
   @override
   State<CustomWidgetContainer> createState() => _CustomWidgetContainerState();
@@ -96,27 +97,14 @@ class CustomWidgetContainer extends StatefulWidget {
 class _CustomWidgetContainerState extends State<CustomWidgetContainer> {
   @override
   Widget build(BuildContext context) {
+    //print('${255*(((widget._index)^0xF)~/0xF)}');
+    //print('${70+20*(widget._index%10)}');
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(2.0),
       child: Container(
-        decoration: const BoxDecoration(color: Colors.black),
-        width: 100,
-        height: 100,
-        color: Colors.orangeAccent.withAlpha(widget._index~/2),
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 22),
-                  child:
-                      Text('${widget._index}', style: const TextStyle(fontSize: 22))),
-            ),
-            Visibility(
-              visible: widget._visibleDivider,
-              child: const Divider(height: 5, color: Colors.blueAccent),
-            ),
-          ],
-        ),
+        height: 60,
+        width: 60,
+        color: Colors.green.withAlpha(70+20*(widget._index%10)),
       ),
     );
   }
@@ -124,12 +112,12 @@ class _CustomWidgetContainerState extends State<CustomWidgetContainer> {
   @override
   void initState() {
     super.initState();
-    print('CustomWidgetContainer ${widget._index} initState! ${widget._visibleDivider?' with Divider':''}');
+    print('CustomWidgetContainer ${widget._index} initState!');
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('CustomWidgetContainer ${widget._index} dispose! ${widget._visibleDivider?' with Divider':''}');
+    print('CustomWidgetContainer ${widget._index} dispose!');
   }
 }
