@@ -38,12 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     ];
-  final List<Widget> data1 = [
-    ...List.generate(500, (index) => CustomWidgetContainer(
-      index: index, visibleDivider: true,
-    ),
-    ),
-  ];
+  // final List<Widget> data1 = [
+  //   ...List.generate(500, (index) => CustomWidgetContainer(
+  //     index: index, visibleDivider: true,
+  //   ),
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                 itemBuilder: (context, int index) => data0[index]),
           ),
-          Expanded(
-            child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: data1.length,
-                itemBuilder: (context, int index) => data1[index]),
-          ),
+          // Expanded(
+          //   child: ListView.builder(
+          //       padding: const EdgeInsets.all(8),
+          //       itemCount: data1.length,
+          //       itemBuilder: (context, int index) => data1[index]),
+          // ),
         ],
       ),
     );
