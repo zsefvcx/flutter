@@ -28,9 +28,9 @@ class FakeTextGenerator{
   'Pellentesque nec volutpat tellus. Praesent eros lectus, facilisis nec vehicula sit amet, tristique a risus. Pellentesque dapibus pellentesque laoreet. Sed at aliquam metus, sit amet finibus lorem. Vestibulum malesuada interdum convallis. Phasellus eu porttitor dolor. Donec posuere tempor urna, at viverra nibh tincidunt et. Etiam ullamcorper tellus magna, eleifend pulvinar ex ultrices vitae. Nunc non fermentum sapien, ut vulputate libero. Morbi gravida hendrerit eros sit amet blandit. ';
 
 
-  int numParagraph;
+  final int numParagraph;
 
-  List<String> _result = [];
+  final List<String> _result = [];
 
 
   List<String> get result => _result;

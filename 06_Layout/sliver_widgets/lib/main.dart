@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowMaterialGrid: false,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
+        //useMaterial3: true,
       ),
       home: const MyHomePage(title: 'sliver widgets'),
     );
@@ -26,20 +26,24 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required String title}) : _title = title;
 
-  final String title;
+  final String _title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const Drawer(child: Center(child: Text('Menu'))),
+      endDrawer: const Drawer(child: Center(child: Text('Home'))),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: CustomScrollView(
@@ -47,9 +51,10 @@ class _MyHomePageState extends State<MyHomePage> {
             SliverAppBar(
               actions: [
                 IconButton(onPressed: () {
-
+                  _scaffoldKey.currentState?.openEndDrawer();
                 },
-                icon: const Icon(Icons.account_tree_outlined)),
+                icon: const Icon(Icons.home),
+                ),
               ],
               expandedHeight: 250,
               floating: false,
@@ -79,12 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
                ),
               ),
             ),
-            SliverGrid.count(
-              crossAxisCount: 1,
-              children: [
-                for(var elem in FakeTextGenerator(10).result)
-                  Text(elem),
-              ],
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  for(var elem in FakeTextGenerator(10).result)
+                    Column(
+                      children: [
+                        Text(elem),
+                        const Divider(height: 5, color: Colors.grey,),
+                      ],
+                    ),
+                ],
+              ),
             ),
           ],
         ),
