@@ -87,24 +87,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     //_fieldText.clear();
                   },
                 ),
-                const Divider(height: 50,),
-                TextField(
-                  controller: _fieldText2,
-                  decoration: const InputDecoration(
-                    hintText: 'Введите значение',
-                    hintStyle: TextStyle(fontSize: 22),
-                    helperText: 'Поле для поиска заметок',
-                    suffixIcon: Icon(Icons.search),
-                    filled: true,
-                    suffixIconColor: Colors.purple,
-                    label: Text('  Search  ',style: TextStyle(fontSize: 22)),
-                  ),
-                  style: const TextStyle(fontSize: 22),
-                  onSubmitted: (value) {
-                    print(value);
-                    //_fieldText2.clear();
-                  },
-                ),
+                // const Divider(height: 50,),
+                // TextField(
+                //   controller: _fieldText2,
+                //   decoration: const InputDecoration(
+                //     hintText: 'Введите значение',
+                //     hintStyle: TextStyle(fontSize: 22),
+                //     helperText: 'Поле для поиска заметок',
+                //     suffixIcon: Icon(Icons.search),
+                //     filled: true,
+                //     suffixIconColor: Colors.purple,
+                //     label: Text('  Search  ',style: TextStyle(fontSize: 22)),
+                //   ),
+                //   style: const TextStyle(fontSize: 22),
+                //   onSubmitted: (value) {
+                //     print(value);
+                //     //_fieldText2.clear();
+                //   },
+                // ),
               ],
             ),
           ),
