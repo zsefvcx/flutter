@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:albums_route/drawer_widget.dart';
+import 'package:albums_route/widgets/drawer_widget.dart';
 
 class MyHomePage extends StatefulWidget {
   final String _title;

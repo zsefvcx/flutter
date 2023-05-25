@@ -1,14 +1,16 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
 class ArtistInformation extends StatelessWidget {
   final String _name;
   final String _about;
-
+  final String _index;
   const ArtistInformation({
     super.key,
     String name = 'Name',
     String about = 'Information',
-  }) : _name = name, _about = about;
+    String index = '0',
+  }) : _name = name, _about = about, _index = index;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ArtistInformation extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Text(_about),
+        child: Text('$_index: $_about'),
       ),
     );
   }

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:albums_route/artists_page.dart';
-import 'package:albums_route/artist_information.dart';
-import 'package:albums_route/home_page.dart';
+import 'package:albums_route/pages/artist_information.dart';
+import 'package:albums_route/pages/artists_page.dart';
+import 'package:albums_route/pages/home_page.dart';
 
 class RouteGenerator{
 
@@ -22,17 +22,14 @@ class RouteGenerator{
         ));
       case '/artistsInformation':
         if(args != null && args is Map<String, String>){
-          if(args['Name']!=null && args['About']!=null){
-            print('object 0 ${args['Name']} ${args['About']}');
+          if(args['Name']!=null && args['About']!=null && args['index']!=null){
             return MaterialPageRoute(builder: (_)=> ArtistInformation(
-              name: args['Name']!, about: args['About']!,
+              name: args['Name']!, about: args['About']!, index: args['index']!,
             ));
           } else {
-            print('object 1');
             return MaterialPageRoute(builder: (_)=> const ArtistInformation());
           }
         } else {
-          print('object 2');
           return MaterialPageRoute(builder: (_)=> const ArtistInformation());
         }
       default:
