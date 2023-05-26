@@ -6,12 +6,13 @@ class ArtistsWidget extends StatelessWidget {
 
   final String _name;
   final int _index;
-
+  final String _about;
   const ArtistsWidget({
     super.key,
     required String name,
+    required String about,
     required int index,
-  }) : _name = name, _index = index;
+  }) : _name = name, _index = index, _about = about;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class ArtistsWidget extends StatelessWidget {
             arguments: {
               'index':_index.toString(),
               'Name': _name,
-              'About': 'Information about albums $_index',
+              'About': _about,
             },);
         },
         child: Center(

@@ -20,8 +20,14 @@ class ArtistInformation extends StatelessWidget {
         title: Text(_name),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text('$_index: $_about'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Text('$_index: $_about'),
+          ),
+        ],
       ),
     );
   }
