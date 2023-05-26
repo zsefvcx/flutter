@@ -17,38 +17,33 @@ class _DrawerItem {
   });
 }
 
-class DrawerWidget extends StatefulWidget {
+final List<_DrawerItem> _drawerItem = [
+  _DrawerItem(
+    title: 'Home',
+    leading: const Icon(Icons.home),
+    trailing: const Icon(Icons.navigate_next),
+    navigate: '/',
+    index: 0,
+  ),
+  _DrawerItem(
+    title: 'Artists',
+    leading: const Icon(Icons.person_2_outlined),
+    trailing: const Icon(Icons.navigate_next),
+    navigate: '/artists',
+    index: 1,
+  ),
+  _DrawerItem(
+    title: 'Albums',
+    leading: const Icon(Icons.album),
+    trailing: const Icon(Icons.navigate_next),
+    navigate: '/albums',
+    index: 2,
+  ),
+];
+
+class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key, required int pageIndex}) : _pageIndex = pageIndex;
   final int _pageIndex;
-  @override
-  State<DrawerWidget> createState() => _DrawerWidgetState();
-}
-
-class _DrawerWidgetState extends State<DrawerWidget> {
-  final List<_DrawerItem> _drawerItem = [
-    _DrawerItem(
-      title: 'Home',
-      leading: const Icon(Icons.home),
-      trailing: const Icon(Icons.navigate_next),
-      navigate: '/',
-      index: 0,
-    ),
-    _DrawerItem(
-      title: 'Artists',
-      leading: const Icon(Icons.person_2_outlined),
-      trailing: const Icon(Icons.navigate_next),
-      navigate: '/artists',
-      index: 1,
-    ),
-    _DrawerItem(
-      title: 'Albums',
-      leading: const Icon(Icons.album),
-      trailing: const Icon(Icons.navigate_next),
-      navigate: '/albums',
-      index: 2,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -64,7 +59,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   leading: e.leading,
                   title: Text(e.title),
                   titleTextStyle: TextStyle(color:
-                  e.index!=widget._pageIndex?Colors.black:Colors.blue),
+                  e.index!=_pageIndex?Colors.black:Colors.blue),
                   trailing: e.trailing,
                   onTap: () {
                     //_pageIndex = e.index;

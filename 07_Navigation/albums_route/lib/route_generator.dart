@@ -12,15 +12,15 @@ class RouteGenerator{
     final args = settings.arguments;
 
     switch(settings.name){
-      case '/':
+      case MyHomePage.routeName:
         return MaterialPageRoute(builder: (_)=> const MyHomePage(
           title: 'Artists Page',
         ));
-      case '/artists':
+      case ArtistsPage.routeName:
         return MaterialPageRoute(builder: (_)=> const ArtistsPage(
           title: 'Artists Information',
         ));
-      case '/artistsInformation':
+      case ArtistInformation.routeName:
         if(args != null && args is Map<String, String>){
           if(args['Name']!=null && args['About']!=null && args['index']!=null){
             return MaterialPageRoute(builder: (_)=> ArtistInformation(

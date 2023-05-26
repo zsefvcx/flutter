@@ -20,7 +20,7 @@ class ArtistsWidget extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: (){
-          Navigator.of(context).pushNamed('/artistsInformation',
+          Navigator.of(context).pushNamed('/artistInformation',
             arguments: {
               'index':_index.toString(),
               'Name': _name,

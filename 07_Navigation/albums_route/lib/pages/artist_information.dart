@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class ArtistInformation extends StatelessWidget {
+  static const routeName = '/artistInformation';
   final String _name;
   final String _about;
   final String _index;

@@ -13,7 +13,8 @@ final List<Widget> data0 = [
   ),
 ];
 
-class ArtistsPage extends StatefulWidget {
+class ArtistsPage extends StatelessWidget {
+  static const routeName = '/artists';
   final String _title;
   const ArtistsPage({
     super.key,
@@ -21,17 +22,11 @@ class ArtistsPage extends StatefulWidget {
   }) : _title = title;
 
   @override
-  State<ArtistsPage> createState() => _ArtistsPageState();
-}
-
-class _ArtistsPageState extends State<ArtistsPage> {
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget._title),
+        title: Text(_title),
         centerTitle: true,
       ),
       drawer: const DrawerWidget(pageIndex: 1),
