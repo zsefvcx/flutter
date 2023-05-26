@@ -49,6 +49,7 @@ class ArtistJsonData{
 
 class _ArtistsPageState extends State<ArtistsPage> {
   Future<void> readJson() async {
+    if(ArtistJsonData.artistsData.isNotEmpty) return;
     final String response = await rootBundle.loadString('assets/artists.json');
     final data = await json.decode(response);
     setState(() {
