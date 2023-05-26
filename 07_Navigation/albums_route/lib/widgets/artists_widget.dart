@@ -1,7 +1,8 @@
-
-
-// 🐦 Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:albums_route/pages/artist_information.dart';
 
 class ArtistsWidget extends StatelessWidget {
 
@@ -20,7 +21,7 @@ class ArtistsWidget extends StatelessWidget {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: (){
-          Navigator.of(context).pushNamed('/artistInformation',
+          Navigator.of(context).pushNamed(ArtistInformation.routeName,
             arguments: {
               'index':_index.toString(),
               'Name': _name,

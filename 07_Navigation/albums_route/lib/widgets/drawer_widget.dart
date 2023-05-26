@@ -1,5 +1,9 @@
-// 🐦 Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import 'package:albums_route/pages/artists_page.dart';
+import 'package:albums_route/pages/home_page.dart';
 
 class _DrawerItem {
   String title;
@@ -22,14 +26,14 @@ final List<_DrawerItem> _drawerItem = [
     title: 'Home',
     leading: const Icon(Icons.home),
     trailing: const Icon(Icons.navigate_next),
-    navigate: '/',
+    navigate: MyHomePage.routeName,
     index: 0,
   ),
   _DrawerItem(
     title: 'Artists',
     leading: const Icon(Icons.person_2_outlined),
     trailing: const Icon(Icons.navigate_next),
-    navigate: '/artists',
+    navigate: ArtistsPage.routeName,
     index: 1,
   ),
   _DrawerItem(

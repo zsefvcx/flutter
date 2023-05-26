@@ -1,7 +1,7 @@
-// 🐦 Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-// 🌎 Project imports:
+// Project imports:
 import 'package:albums_route/widgets/drawer_widget.dart';
 
 class MyHomePage extends StatelessWidget {

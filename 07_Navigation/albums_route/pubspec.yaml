@@ -25,7 +25,7 @@ dependencies:
 #pub run import_sorter:main -e if normal dart application
 import_sorter:
   emojis: false # Optional, defaults to false
-  comments: true # Optional, defaults to true
+  comments: false # Optional, defaults to true
   ignored_files: # Optional, defaults to []
     - \/tests\/*
 
@@ -40,8 +40,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  #assets:
-  #  - assets/
+  assets:
+    - assets/artists.json
   #  - assets/img/
   # fonts:
   #   - family: Schyler
