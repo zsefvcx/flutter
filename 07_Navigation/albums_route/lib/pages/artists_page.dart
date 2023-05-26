@@ -18,14 +18,43 @@ class ArtistsPage extends StatefulWidget {
   State<ArtistsPage> createState() => _ArtistsPageState();
 }
 
-class _ArtistsPageState extends State<ArtistsPage> {
-  List _items = [];
+class ArtistJsonData{
+  final int id;
+  final String name;
+  final String about;
 
+  static List<ArtistJsonData> artistsData = [];
+
+  ArtistJsonData(this.id, this.name, this.about);
+
+  static void fromJson(dynamic data){
+    if (data is List<dynamic>){
+      for (var element in data) {
+        if (element is Map<String, dynamic>){
+          if( element['id'         ]!=null && element['id'         ] is int
+             && element['name'       ]!=null && element['name'       ] is String
+             && element['description']!=null && element['description'] is String
+          ){
+            artistsData.add(ArtistJsonData(
+                element['id'] as int,
+                element['name'] as String,
+                element['description'] as String));
+          }
+        }
+      }
+    }
+  }
+}
+
+
+class _ArtistsPageState extends State<ArtistsPage> {
   Future<void> readJson() async {
     final String response = await rootBundle.loadString('assets/artists.json');
     final data = await json.decode(response);
     setState(() {
-      if(data != null) _items = data;
+      if(data != null){
+        ArtistJsonData.fromJson(data);
+      }
     });
   }
 
@@ -56,10 +85,10 @@ class _ArtistsPageState extends State<ArtistsPage> {
           child: ListView(
               padding: const EdgeInsets.all(8),
               children: [
-                  ...List.generate(_items.length, (index) => ArtistsWidget(
-                  index: index,
-                  name: '${_items[index]['name']}',
-                    about: '${_items[index]['description']}',
+                  ...List.generate(ArtistJsonData.artistsData.length, (index) => ArtistsWidget(
+                  index: ArtistJsonData.artistsData[index].id,
+                  name: ArtistJsonData.artistsData[index].name,
+                    about: ArtistJsonData.artistsData[index].about,
                   ),
                   ),
               ],
