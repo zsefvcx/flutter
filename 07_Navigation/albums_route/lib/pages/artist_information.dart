@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 
+import 'package:albums_route/classes/artist_json_data.dart';
+
 class ArtistInformation extends StatelessWidget {
   static const routeName = '/artistInformation';
-  final String _name;
-  final String _about;
-  final String _index;
+  final ArtistData _artistData;
   const ArtistInformation({
     super.key,
-    String name = 'Name',
-    String about = 'Information',
-    String index = '0',
-  }) : _name = name, _about = about, _index = index;
+    required ArtistData artistData,
+  }) : _artistData = artistData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(_name),
+        title: Text(_artistData.name),
         centerTitle: true,
       ),
       body: Column(
@@ -25,7 +23,7 @@ class ArtistInformation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Text('$_index: $_about'),
+            child: Text('${_artistData.id}: ${_artistData.about}'),
           ),
         ],
       ),

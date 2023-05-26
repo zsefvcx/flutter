@@ -19,15 +19,18 @@ class MyHomePage extends StatelessWidget {
         centerTitle: true,
       ),
       drawer: const DrawerWidget(pageIndex: 0),
-      body: const SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Home Page',
-              ),
-            ],
+      body: SafeArea(
+        child: Container(
+          color: Colors.lightGreenAccent,
+          child: const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Home Page',
+                ),
+              ],
+            ),
           ),
         ),
       ),

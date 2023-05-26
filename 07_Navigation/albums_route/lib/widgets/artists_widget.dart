@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'package:albums_route/classes/artist_json_data.dart';
 import 'package:albums_route/pages/artist_information.dart';
 
 class ArtistsWidget extends StatelessWidget {
+  final ArtistData _artistData;
 
-  final String _name;
-  final int _index;
-  final String _about;
   const ArtistsWidget({
     super.key,
-    required String name,
-    required String about,
-    required int index,
-  }) : _name = name, _index = index, _about = about;
+    required ArtistData artistData,
+  }) : _artistData = artistData;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +19,7 @@ class ArtistsWidget extends StatelessWidget {
         onTap: (){
           Navigator.of(context).pushNamed(ArtistInformation.routeName,
             arguments: {
-              'index':_index.toString(),
-              'Name': _name,
-              'About': _about,
+              'ArtistData':_artistData,
             },);
         },
         child: Center(
@@ -36,7 +31,7 @@ class ArtistsWidget extends StatelessWidget {
               color: Colors.white,
               border: Border.all(color: Colors.white),
             ),
-            child: Text(_name),
+            child: Text(_artistData.name),
           ),
         ),
       ),

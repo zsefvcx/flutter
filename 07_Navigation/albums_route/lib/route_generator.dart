@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:albums_route/classes/artist_json_data.dart';
 import 'package:albums_route/pages/artist_information.dart';
 import 'package:albums_route/pages/artists_page.dart';
 import 'package:albums_route/pages/home_page.dart';
@@ -11,24 +12,45 @@ class RouteGenerator{
 
     switch(settings.name){
       case MyHomePage.routeName:
-        return MaterialPageRoute(builder: (_)=> const MyHomePage(
-          title: 'Artists Page',
-        ));
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+            const MyHomePage(title: 'Artists Page',),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            CurvedAnimation curved = CurvedAnimation(
+                parent: animation,
+                curve: Curves.fastOutSlowIn);
+            Animation<double> anim =
+                Tween<double>(begin: 0.0, end: 1.0).animate(curved);
+            return ScaleTransition(
+                scale: anim,
+                child: FadeTransition(opacity: animation, child: child,),
+            );
+          },
+        );
       case ArtistsPage.routeName:
-        return MaterialPageRoute(builder: (_)=> const ArtistsPage(
-          title: 'Artists Information',
-        ));
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+            const ArtistsPage(title: 'Artists Information',),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child,);
+          },
+        );
       case ArtistInformation.routeName:
-        if(args != null && args is Map<String, String>){
-          if(args['Name']!=null && args['About']!=null && args['index']!=null){
-            return MaterialPageRoute(builder: (_)=> ArtistInformation(
-              name: args['Name']!, about: args['About']!, index: args['index']!,
-            ));
+        if(args != null && args is Map<String, ArtistData>){
+          if(args['ArtistData']!=null){
+            ArtistData data = args['ArtistData'] as ArtistData;
+            return PageRouteBuilder(
+              pageBuilder:(context, animation, secondaryAnimation) =>
+                ArtistInformation(artistData: data,),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return FadeTransition(opacity: animation, child: child,);
+              },
+            );
           } else {
-            return MaterialPageRoute(builder: (_)=> const ArtistInformation());
+            return _errorRoute();
           }
         } else {
-          return MaterialPageRoute(builder: (_)=> const ArtistInformation());
+          return _errorRoute();
         }
       default:
         return _errorRoute();
@@ -48,6 +70,7 @@ class RouteGenerator{
           ),
         );
       },
+      fullscreenDialog: true,
     );
   }
 }
