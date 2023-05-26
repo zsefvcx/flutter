@@ -1,7 +1,8 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-// Project imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:albums_route/widgets/artists_widget.dart';
 import 'package:albums_route/widgets/drawer_widget.dart';
 
@@ -13,7 +14,7 @@ final List<Widget> data0 = [
   ),
 ];
 
-class ArtistsPage extends StatelessWidget {
+class ArtistsPage extends StatefulWidget {
   static const routeName = '/artists';
   final String _title;
   const ArtistsPage({
@@ -22,11 +23,40 @@ class ArtistsPage extends StatelessWidget {
   }) : _title = title;
 
   @override
+  State<ArtistsPage> createState() => _ArtistsPageState();
+}
+
+class _ArtistsPageState extends State<ArtistsPage> {
+  List _items = [];
+
+  Future<void> readJson() async {
+    final String response = await rootBundle.loadString('assets/artists.json');
+    final data = await json.decode(response);
+    setState(() {
+      //print(object)
+      _items = data;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print('initState ArtistsPage');
+    readJson();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('dispose ArtistsPage');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(_title),
+        title: Text(widget._title),
         centerTitle: true,
       ),
       drawer: const DrawerWidget(pageIndex: 1),

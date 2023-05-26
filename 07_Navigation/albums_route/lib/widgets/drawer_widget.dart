@@ -1,7 +1,5 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
 import 'package:albums_route/pages/artists_page.dart';
 import 'package:albums_route/pages/home_page.dart';
 

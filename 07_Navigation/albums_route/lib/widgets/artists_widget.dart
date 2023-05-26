@@ -1,7 +1,5 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
 import 'package:albums_route/pages/artist_information.dart';
 
 class ArtistsWidget extends StatelessWidget {
