@@ -1,30 +1,33 @@
+
 import 'package:flutter/material.dart';
+import 'package:load_file/fetch_file.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Load file'),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -32,17 +35,29 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Catch error'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
+      body: FutureBuilder<String>(
+        future: fetchFileFromAssets('assets/somefile.txt'),//somefile
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              return const Center(
+                child: Text('NONE'),
+              );
+              break;
+            case ConnectionState.waiting:
+              return const Center(child: CircularProgressIndicator());
+              break;
+            case ConnectionState.done:
+              return SingleChildScrollView(child: Text('${snapshot.data}'));
+              break;
+            default:
+              return const SingleChildScrollView(
+                child: Text('Default'),
+              );
+          }
+        },
       ),
     );
   }
