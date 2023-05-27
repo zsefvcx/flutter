@@ -45,13 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
               return const Center(
                 child: Text('NONE'),
               );
-              break;
             case ConnectionState.waiting:
               return const Center(child: CircularProgressIndicator());
-              break;
             case ConnectionState.done:
               return SingleChildScrollView(child: Text('${snapshot.data}'));
-              break;
             default:
               return const SingleChildScrollView(
                 child: Text('Default'),
