@@ -4,10 +4,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,16 +18,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -34,9 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Future / Stream'),
+        title: const Text('Future / Stream'),
       ),
-      body: Column(
+      body: const Column(
         children: [
           Expanded(
             child: Column(
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {});
         },
         tooltip: 'Increment',
-        child: Icon(Icons.play_arrow),
+        child: const Icon(Icons.play_arrow),
       ),
     );
   }
@@ -87,7 +89,7 @@ Stream<int> dataStream(int count) async* {
       throw 'Ошибка, число меньше 20';
     } else {
       count = count - 1;
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       yield rand;
     }
   }
@@ -95,7 +97,7 @@ Stream<int> dataStream(int count) async* {
 
 Future<String> dataFuture() async {
   var random = Random();
-  final response = await Future.delayed(Duration(seconds: 1), () {
+  final response = await Future.delayed(const Duration(seconds: 1), () {
     final isSuccess = random.nextBool();
     return isSuccess;
   });

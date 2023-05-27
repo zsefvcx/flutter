@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:load_file/fetch_file.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,18 +11,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(),
+      home: const MyHomePage(title: 'Load file'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -35,26 +34,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catch error'),
+        title: Text(widget.title),
       ),
-      body: FutureBuilder<String>(
-        future: fetchFileFromAssets('assets/somefile.txt'),//somefile
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              return const Center(
-                child: Text('NONE'),
-              );
-            case ConnectionState.waiting:
-              return const Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              return SingleChildScrollView(child: Text('${snapshot.data}'));
-            default:
-              return const SingleChildScrollView(
-                child: Text('Default'),
-              );
-          }
-        },
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+          ],
+        ),
       ),
     );
   }
