@@ -1,5 +1,4 @@
 import 'package:catch_error/models/hotel.dart';
-import 'package:catch_error/wigdet/list_view_widget.dart';
 import 'package:catch_error/wigdet/lite_list_view_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,7 @@ class _HomeViewState extends State<HomeView> {
   final double minSizeWidth = 500;
   bool isLoading = false;
   List<HotelPreview> hotels = [];
-
+  bool listViewModeButton = true;
   Future<void> getData() async {
     setState(() {
       isLoading = true;
@@ -67,13 +66,17 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
             onPressed: () {
-
+              setState(() {
+                listViewModeButton = true;
+              });
             },
             icon: const Icon(Icons.list),
           ),
           IconButton(
             onPressed: () {
-
+              setState(() {
+                listViewModeButton = false;
+              });
             },
             icon: const Icon(Icons.apps),
           ),
@@ -87,18 +90,37 @@ class _HomeViewState extends State<HomeView> {
       LayoutBuilder(
         builder: (context, constraints) {
           double width = constraints.constrainWidth();
-          return Expanded(
-              child: GridView.count(
+          int crossAxisCount = 1;
+          //bool listViewMode = false;
+          if (listViewModeButton) {
+            //listViewMode = true;
+            crossAxisCount = 1;
+          } else {
+            //listViewMode = false;
+            crossAxisCount = 2;
+          }
 
-                //scrollDirection: width > minSizeWidth?Axis.horizontal:Axis.vertical,
-                itemCount: hotels.length,
-                itemBuilder: (context, i) =>
-                  //width > minSizeWidth
-                  //    ?ListViewWidget(hotel: hotels[i]):
-                   LiteListViewWidget(hotel: hotels[i]),
+          return GridView.count(
+            padding: const EdgeInsets.all(15),
+            mainAxisSpacing: 15,
+            crossAxisSpacing: 15,
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: 1,
+
+
+            physics: const ClampingScrollPhysics(),
+            children: [
+              ...List.generate(hotels.length,
+                    (index) => LiteListViewWidget(hotel: hotels[index]
+                    , liteType: crossAxisCount==2?true:false),
               ),
+            ],
+            //itemCount:
+            //itemBuilder: (context, i) => //listViewMode?
+             //ListViewWidget(hotel: hotels[i]):
+              //,
             );
-        }
+          }
       ),
     );
   }
