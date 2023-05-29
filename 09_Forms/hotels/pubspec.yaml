@@ -23,6 +23,8 @@ dependencies:
   #provider: ^6.0.4
   json_serializable: ^6.7.0
   build_runner: ^2.4.4
+  http: ^1.0.0
+  json_annotation:
 
 #flutter pub run import_sorter:main -e
 #pub run import_sorter:main -e if normal dart application
