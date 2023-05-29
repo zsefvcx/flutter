@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({Key key}) : super(key: key);
+  HomeView({super.key});
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
@@ -12,7 +12,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body: const Center(
         child: Text("Hotels"),
       ),
     );
