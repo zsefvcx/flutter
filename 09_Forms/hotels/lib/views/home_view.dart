@@ -1,6 +1,7 @@
 import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
+import 'package:hotels/get/http_get_json.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -17,59 +18,27 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final double minSizeWidth = 500;
-  bool isLoading = false;
-  bool isError = false;
+  bool isLoadingClass = true;
+  bool isErrorClass = false;
 
   List<HotelPreview> hotels = [];
   bool listViewModeButton = true;
-  Future<void> getData() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    var url = Uri.https('run.mocky.io',
-        '/v3/ac888dc5-d193-4700-b12c-abb43e289301', {'q': '{https}'});
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      try {
-        var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
-
-        hotels.clear();
-        hotels = jsonResponse.map((e) {
-          if (e is Map<String, dynamic>) {
-             return HotelPreview.fromJson(e);
-          } else {
-             throw 'Error received data $e';
-          }
-        }).toList();
-
-        print(hotels);
-
-        setState(() {
-          isLoading = false;
-        });
-      } catch (e, t) {
-        print('recognition error jsonResponse. Error:\n$e \n$t');
-        setState(() {
-          isError = true;
-          isLoading = false;
-        });
-      }
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-      setState(() {
-        isError = true;
-        isLoading = false;
-      });
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    Future<void> get() async {
+      var (List<HotelPreview> data, isError, isLoading) =
+        await GetDataHttp(TypeSender.hotelPreviewSnd).getData('run.mocky.io',
+          '/v3/ac888dc5-d193-4700-b12c-abb43e289301', {'q': '{https}'});
+      setState(() {
+        isErrorClass = isError;
+        isLoadingClass = isLoading;
+        hotels = data;
+      });
+    }
+    get();
+
   }
 
   @override
@@ -92,9 +61,9 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        body: (isLoading && !isError)
+        body: (isLoadingClass && !isErrorClass)
             ? const Center(child: CircularProgressIndicator())
-            : isError?const Center(
+            : isErrorClass?const Center(
                 child: Text('Контент временно недоступен', textAlign: TextAlign.start, ),
         ):
         LayoutBuilder(
