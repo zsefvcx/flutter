@@ -1,9 +1,8 @@
-import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:http/http.dart' as http;
+import 'package:hotels/get/http_get_json.dart';
 
 import 'package:hotels/models/hotel.dart';
 import 'package:hotels/models/hotel_address.dart';
@@ -24,63 +23,50 @@ class HotelView extends StatefulWidget {
 }
 
 class _HotelViewState extends State<HotelView> {
-  bool isLoading = false;
-  bool isError = false;
+  bool isLoadingClass = true;
+  bool isErrorClass = false;
 
   late HotelInfo hotelInfo;
   late HotelAddress hotelAddress;
   late HotelServices hotelServices;
-
-  Future<void> getData() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    var url =
-        Uri.https('run.mocky.io', '/v3/${widget.hotel.uuid}', {'q': '{https}'});
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      try {
-        var jsonResponse =
-            convert.jsonDecode(response.body) as Map<String, dynamic>;
-
-        hotelInfo = HotelInfo.fromJson(jsonResponse);
-        print(hotelInfo);
-
-        hotelAddress = HotelAddress.fromJson(hotelInfo.address);
-        print(hotelAddress);
-
-        hotelServices = HotelServices.fromJson(hotelInfo.services);
-        print(hotelServices);
-
-        HotelCoords hotelCoords = HotelCoords.fromJson(hotelAddress.coords);
-        print(hotelCoords);
-
-        setState(() {
-          isLoading = false;
-        });
-      } catch (e, t) {
-        print('recognition error jsonResponse. Error:\n$e \n$t');
-        setState(() {
-          isError = true;
-          isLoading = false;
-        });
-      }
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-      setState(() {
-        isError = true;
-        isLoading = false;
-      });
-    }
-  }
+  late HotelCoords hotelCoords;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    Future<void> get() async {
+      var (dynamic data, isError, isLoading) =
+      await GetDataHttp(TypeSender.hotelInfoSnd).getData('run.mocky.io',
+          '/v3/${widget.hotel.uuid}', {'q': '{https}'});
+
+      if(isError == false && data is List<dynamic> && data.length==4 &&
+           data[0] is HotelInfo &&
+           data[1] is HotelAddress &&
+           data[2] is HotelServices &&
+           data[3] is HotelCoords
+      ){
+        if(data[0] is HotelInfo){
+          hotelInfo = data[0] as HotelInfo;
+        }
+        if(data[1] is HotelAddress){
+          hotelAddress = data[1] as HotelAddress;
+        }
+        if(data[2] is HotelServices){
+          hotelServices = data[2] as HotelServices;
+        }
+        if(data[3] is HotelCoords){
+          hotelCoords = data[3] as HotelCoords;
+        }
+      } else {
+        isError = true;
+        isLoading = false;
+      }
+      setState(() {
+        isErrorClass = isError;
+        isLoadingClass = isLoading;
+      });
+    }
+    get();
   }
 
   @override
@@ -88,9 +74,9 @@ class _HotelViewState extends State<HotelView> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: (isLoading && !isError)
+        body: (isLoadingClass && !isErrorClass)
             ? const Center(child: CircularProgressIndicator())
-            : isError
+            : isErrorClass
                 ? const Center(
                     child: Text(
                       'Контент временно недоступен',

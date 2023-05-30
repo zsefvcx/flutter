@@ -63,7 +63,6 @@ class HotelInfo {
   // ]
   final  List<String> photos;
 
-
   HotelInfo({
     required this.uuid,
     required this.name,

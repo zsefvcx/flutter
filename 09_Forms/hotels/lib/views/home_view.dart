@@ -1,9 +1,6 @@
-import 'dart:convert' as convert;
 
 import 'package:flutter/material.dart';
 import 'package:hotels/get/http_get_json.dart';
-
-import 'package:http/http.dart' as http;
 
 import 'package:hotels/models/hotel.dart';
 import 'package:hotels/wigdet/lite_list_view_widget.dart';
@@ -28,13 +25,19 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     Future<void> get() async {
-      var (List<HotelPreview> data, isError, isLoading) =
+      var (dynamic data, isError, isLoading) =
         await GetDataHttp(TypeSender.hotelPreviewSnd).getData('run.mocky.io',
           '/v3/ac888dc5-d193-4700-b12c-abb43e289301', {'q': '{https}'});
+      if (isError == false && data is List<HotelPreview>) {
+        hotels = data;
+      } else {
+        isError = true;
+        isLoading = false;
+      }
       setState(() {
         isErrorClass = isError;
         isLoadingClass = isLoading;
-        hotels = data;
+
       });
     }
     get();

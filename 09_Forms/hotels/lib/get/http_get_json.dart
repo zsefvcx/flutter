@@ -1,10 +1,15 @@
 import 'dart:convert' as convert;
 
 import 'package:hotels/models/hotel.dart';
+import 'package:hotels/models/hotel_address.dart';
+import 'package:hotels/models/hotel_services.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/hotel_info.dart';
 
 enum TypeSender{
   hotelPreviewSnd,
+  hotelInfoSnd,
 }
 
 class GetDataHttp{
@@ -26,9 +31,9 @@ class GetDataHttp{
           unencodedPath, queryParameters);
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        if (typeSender == TypeSender.hotelPreviewSnd){
+        if (typeSender == TypeSender.hotelPreviewSnd) {
           var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
-          print(jsonResponse);
+          //print(jsonResponse);
 
           data = jsonResponse.map((e) {
             if (e is Map<String, dynamic>) {
@@ -37,6 +42,23 @@ class GetDataHttp{
               throw 'Error received data $e';
             }
           }).toList();
+        } else if (typeSender == TypeSender.hotelInfoSnd){
+          var jsonResponse =
+          convert.jsonDecode(response.body) as Map<String, dynamic>;
+          //print(jsonResponse);
+
+          HotelInfo hotelInfo = HotelInfo.fromJson(jsonResponse);
+          HotelAddress hotelAddress = HotelAddress.fromJson(hotelInfo.address);
+          HotelServices hotelServices = HotelServices.fromJson(hotelInfo.services);
+          HotelCoords hotelCoords = HotelCoords.fromJson(hotelAddress.coords);
+          List<dynamic> dataHotelInfo = [
+            hotelInfo,
+            hotelAddress,
+            hotelServices,
+            hotelCoords,
+          ];
+
+          data = dataHotelInfo;
 
         } else{
           throw 'Type data is not recognize ${data.runtimeType}.';
