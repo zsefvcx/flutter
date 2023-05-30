@@ -100,25 +100,38 @@ class _HomeViewState extends State<HomeView> {
             crossAxisCount = 2;
           }
 
-          return GridView.count(
-            padding: const EdgeInsets.all(15),
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15,
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: 1,
-
-
-            physics: const ClampingScrollPhysics(),
-            children: [
-              ...List.generate(hotels.length,
-                    (index) => LiteListViewWidget(hotel: hotels[index]
-                    , liteType: crossAxisCount==2?true:false),
+          return Container(
+            padding: const EdgeInsets.all(10),
+            color: Colors.grey.shade300,
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+                mainAxisExtent: 200, // here set custom Height You Want
+                childAspectRatio: 1,
               ),
-            ],
-            //itemCount:
-            //itemBuilder: (context, i) => //listViewMode?
-             //ListViewWidget(hotel: hotels[i]):
-              //,
+              itemCount: hotels.length,
+              itemBuilder: (BuildContext context, int index) {
+                return LiteListViewWidget(hotel: hotels[index]
+                               , liteType: crossAxisCount==2?true:false);
+              },
+            ),
+          // return GridView.count(
+          //   padding: const EdgeInsets.all(15),
+          //   mainAxisSpacing: 15,
+          //   crossAxisSpacing: 15,
+          //   crossAxisCount: crossAxisCount,
+          //   childAspectRatio: 1,
+          //
+          //
+          //   physics: const ClampingScrollPhysics(),
+          //   children: [
+          //     ...List.generate(hotels.length,
+          //           (index) => LiteListViewWidget(hotel: hotels[index]
+          //           , liteType: crossAxisCount==2?true:false),
+          //     ),
+          //   ],
             );
           }
       ),

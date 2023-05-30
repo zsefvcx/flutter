@@ -64,30 +64,33 @@ class FullWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            hotel.name,
-            textDirection: TextDirection.ltr,
-            textAlign: TextAlign.center,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              hotel.name,
+              //textDirection: TextDirection.ltr,
+              textAlign: TextAlign.start,
+            ),
           ),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
-              ),
-              onPressed: () {
-                print("Clicked!!!");
-              },
-              child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
-        ),
-      ],
+          Expanded(
+            flex: 1,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
+                ),
+                onPressed: () {
+                  print("Clicked!!!");
+                },
+                child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -102,29 +105,33 @@ class LiteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          flex: 2,
-          child: Text(
-            hotel.name,
-            //textDirection: TextDirection.ltr,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              hotel.name,
+              //textDirection: TextDirection.ltr,
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-        Expanded(
-          flex: 1,
-          child: ElevatedButton(
-              style: ButtonStyle(
-                minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
-              ),
-              onPressed: () {
-                print("Clicked!!!");
-              },
-              child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
-        ),
-      ],
+          Expanded(
+            flex: 1,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
+                ),
+                onPressed: () {
+                  print("Clicked!!!");
+                },
+                child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
+          ),
+        ],
+      ),
     );
   }
 }
