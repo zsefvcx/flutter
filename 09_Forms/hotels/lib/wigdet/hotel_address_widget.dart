@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 import 'package:hotels/models/hotel_address.dart';
 
 class HotelAddressWidget extends StatelessWidget {

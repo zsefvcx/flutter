@@ -1,9 +1,8 @@
-
-import 'package:hotels/models/hotel.dart';
-import 'package:hotels/views/hotel_view.dart';
 import 'package:flutter/material.dart';
 
+import 'package:hotels/models/hotel.dart';
 import 'package:hotels/views/home_view.dart';
+import 'package:hotels/views/hotel_view.dart';
 
 void main() {
   runApp(const MyApp());

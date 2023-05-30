@@ -1,9 +1,11 @@
-import 'package:hotels/models/hotel.dart';
-import 'package:hotels/wigdet/lite_list_view_widget.dart';
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
+
+import 'package:hotels/models/hotel.dart';
+import 'package:hotels/wigdet/lite_list_view_widget.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/';

@@ -1,14 +1,16 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:convert' as convert;
+
 import 'package:flutter/material.dart';
+
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:hotels/models/hotel.dart';
 import 'package:hotels/models/hotel_address.dart';
 import 'package:hotels/models/hotel_info.dart';
 import 'package:hotels/models/hotel_services.dart';
 import 'package:hotels/wigdet/hotel_address_widget.dart';
 import 'package:hotels/wigdet/hotel_services_widget.dart';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 
 class HotelView extends StatefulWidget {
   static const routeName = '/hotel';
