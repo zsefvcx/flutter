@@ -1,5 +1,5 @@
-name: catch_error
-description: catch_error
+name: hotels
+description: hotels
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   #flutter_svg: ^2.0.5
   cupertino_icons: ^1.0.2
-  #carousel_slider: ^4.2.1
+  carousel_slider: ^4.2.1
   #carousel_slider:
   # git:
   #    url: https://github.com/serenader2014/flutter_carousel_slider
@@ -23,6 +23,17 @@ dependencies:
   #provider: ^6.0.4
   json_serializable: ^6.7.0
   build_runner: ^2.4.4
+  #dart pub run build_runner watch
+  #The build_runner package exposes a binary by the same name, which can be invoked using dart run build_runner <command>.
+  #The available commands are build, watch, serve, and test.
+  #build: Runs a single build and exits.
+  #watch: Runs a persistent build server that watches the files system for edits and does rebuilds as necessary.
+  #serve: Same as watch, but runs a development server as well.
+  #  By default this serves the web and test directories, on port 8080 and 8081 respectively. See below for how to configure this.
+  #test: Runs a single build, creates a merged output directory, and then runs dart run test --precompiled <merged-output-dir>. See below for instructions on passing custom args to the test command.
+  #
+
+
   http: ^1.0.0
   json_annotation:
 

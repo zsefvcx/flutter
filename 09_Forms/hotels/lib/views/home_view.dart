@@ -1,11 +1,12 @@
-import 'package:catch_error/models/hotel.dart';
-import 'package:catch_error/wigdet/lite_list_view_widget.dart';
+import 'package:hotels/models/hotel.dart';
+import 'package:hotels/wigdet/lite_list_view_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class HomeView extends StatefulWidget {
+  static const routeName = '/';
   const HomeView({super.key});
 
   @override
@@ -15,6 +16,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final double minSizeWidth = 500;
   bool isLoading = false;
+  bool isError = false;
+
   List<HotelPreview> hotels = [];
   bool listViewModeButton = true;
   Future<void> getData() async {
@@ -45,11 +48,19 @@ class _HomeViewState extends State<HomeView> {
         setState(() {
           isLoading = false;
         });
-      } catch (e) {
-        print('recognition error jsonResponse. Error:\n$e');
+      } catch (e, t) {
+        print('recognition error jsonResponse. Error:\n$e \n$t');
+        setState(() {
+          isError = true;
+          isLoading = false;
+        });
       }
     } else {
       print('Request failed with status: ${response.statusCode}.');
+      setState(() {
+        isError = true;
+        isLoading = false;
+      });
     }
   }
 
@@ -61,79 +72,53 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                listViewModeButton = true;
-              });
-            },
-            icon: const Icon(Icons.list),
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                listViewModeButton = false;
-              });
-            },
-            icon: const Icon(Icons.apps),
-          ),
-        ],
-      ),
-      body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          :
-      LayoutBuilder(
-        builder: (context, constraints) {
-          double width = constraints.constrainWidth();
-          int crossAxisCount = 1;
-          //bool listViewMode = false;
-          if (listViewModeButton) {
-            //listViewMode = true;
-            crossAxisCount = 1;
-          } else {
-            //listViewMode = false;
-            crossAxisCount = 2;
-          }
-
-          return Container(
-            padding: const EdgeInsets.all(10),
-            color: Colors.grey.shade300,
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                mainAxisExtent: 200, // here set custom Height You Want
-                childAspectRatio: 1,
-              ),
-              itemCount: hotels.length,
-              itemBuilder: (BuildContext context, int index) {
-                return LiteListViewWidget(hotel: hotels[index]
-                               , liteType: crossAxisCount==2?true:false);
-              },
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () => setState(() {
+                  listViewModeButton = true;
+              }),
+              icon: const Icon(Icons.list),
             ),
-          // return GridView.count(
-          //   padding: const EdgeInsets.all(15),
-          //   mainAxisSpacing: 15,
-          //   crossAxisSpacing: 15,
-          //   crossAxisCount: crossAxisCount,
-          //   childAspectRatio: 1,
-          //
-          //
-          //   physics: const ClampingScrollPhysics(),
-          //   children: [
-          //     ...List.generate(hotels.length,
-          //           (index) => LiteListViewWidget(hotel: hotels[index]
-          //           , liteType: crossAxisCount==2?true:false),
-          //     ),
-          //   ],
+            IconButton(
+              onPressed: () => setState(() {
+                  listViewModeButton = false;
+              }),
+              icon: const Icon(Icons.apps),
+            ),
+          ],
+        ),
+        body: (isLoading && !isError)
+            ? const Center(child: CircularProgressIndicator())
+            : isError?const Center(
+                child: Text('Контент временно недоступен', textAlign: TextAlign.start, ),
+        ):
+        LayoutBuilder(
+          builder: (context, constraints) {
+            double width = constraints.constrainWidth();
+            double mainAxisExtent = width/(listViewModeButton?1.65:2.2)-20;
+
+            return Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: listViewModeButton?1:2,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  mainAxisExtent: mainAxisExtent, // here set custom Height You Want
+                  childAspectRatio: 1,
+                ),
+                itemCount: hotels.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return LiteListViewWidget(hotel: hotels[index]
+                                 , liteType: listViewModeButton);
+                },
+              ),
             );
-          }
+            }
+        ),
       ),
     );
   }

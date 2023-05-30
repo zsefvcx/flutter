@@ -1,4 +1,4 @@
-import 'package:catch_error/models/hotel.dart';
+import 'package:hotels/models/hotel.dart';
 import 'package:flutter/material.dart';
 
 class LiteListViewWidget extends StatelessWidget {
@@ -14,8 +14,7 @@ class LiteListViewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-      //height: 800,
+      margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -31,22 +30,26 @@ class LiteListViewWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: liteType?4:8,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(15),
-                topLeft: Radius.circular(15),
-              ),
-              child: Image.asset(
-                'assets/images/${hotel.poster}',
-                alignment: Alignment.topCenter,
-                fit: BoxFit.fill,
+            flex: liteType?3:1,
+            child: SizedBox(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  topLeft: Radius.circular(15),
+                ),
+                child: Image.asset(
+                  'assets/images/${hotel.poster}',
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
               ),
             ),
           ),
           Expanded(
-            flex: 2,
-            child: liteType?LiteWidget(hotel: hotel):FullWidget(hotel: hotel),
+            flex: 1,
+            child: liteType?FullWidget(hotel: hotel):LiteWidget(hotel: hotel),
           ),
         ],
       ),
@@ -65,7 +68,7 @@ class FullWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+      padding: const EdgeInsets.fromLTRB(8, 2, 15, 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -81,11 +84,14 @@ class FullWidget extends StatelessWidget {
           Expanded(
             flex: 1,
             child: ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 40),
                 ),
                 onPressed: () {
-                  print("Clicked!!!");
+                  Navigator.of(context).pushNamed('/hotel',
+                    arguments: {
+                    'hotel':hotel,
+                    },);
                 },
                 child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
           ),
@@ -105,33 +111,43 @@ class LiteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          flex: 2,
+          child: Center(
             child: Text(
               hotel.name,
               //textDirection: TextDirection.ltr,
               textAlign: TextAlign.center,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
+        ),
+        Expanded(
+          flex: 1,
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 40),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                    //topLeft: Radius.circular(15),
+                    //topRight: Radius.circular(15),
+                  ),
                 ),
-                onPressed: () {
-                  print("Clicked!!!");
-                },
-                child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
-          ),
-        ],
-      ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed('/hotel',
+                  arguments: {
+                    'hotel':hotel,
+                  },);
+              },
+              child: const FittedBox(child: Text('Подробнее', style: TextStyle(fontSize: 14)))),
+        ),
+      ],
     );
   }
 }
