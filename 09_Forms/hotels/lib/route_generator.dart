@@ -8,7 +8,7 @@ class RouteGenerator {
 
   static String initialRoute = HotelsPreview.routeName;
 
-  static Route<dynamic> generateRoute(settings){
+  static Route<dynamic> generateRoute(RouteSettings settings){
     final args = settings.arguments;
 
     switch(settings.name){

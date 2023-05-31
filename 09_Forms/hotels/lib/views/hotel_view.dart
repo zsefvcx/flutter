@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:carousel_slider/carousel_slider.dart';
-
 import 'package:hotels/get/http_get_json.dart';
 import 'package:hotels/models/models.dart';
 import 'package:hotels/views/widget/widget.dart';
@@ -18,106 +16,53 @@ class HotelView extends StatefulWidget {
 }
 
 class _HotelViewState extends State<HotelView> {
-  bool isLoadingClass = true;
-  bool isErrorClass = false;
-
-  HotelInfoRecognize? hotelInfo;
-
-  @override
-  void initState() {
-    super.initState();
-    Future<void> get() async {
-      var (HotelInfoRecognize? data, isError, isLoading) =
-          await GetHotelDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid);
-      if (data != null) {
-        hotelInfo = data;
-      } else {
-        isError = true;
-      }
-      setState(() {
-        isErrorClass = isError;
-        isLoadingClass = isLoading;
-      });
-    }
-
-    get();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: (isLoadingClass && !isErrorClass)
-            ? const Center(child: CircularProgressIndicator())
-            : isErrorClass
-                ? const Center(
+        body: FutureBuilder(
+          future: GetHotelDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                bool isErrorClass = true;
+                late HotelInfoRecognize hotelInfo;
+                var data = snapshot.data;
+                if (data != null) {
+                  isErrorClass = data.$2;
+                  var hotelInfoData = data.$1;
+                  if (hotelInfoData != null) {
+                    hotelInfo = hotelInfoData;
+                  } else {
+                    isErrorClass = true;
+                  }
+                }
+                if (isErrorClass) {
+                  return const Center(
                     child: Text(
                       'Контент временно недоступен',
                       textAlign: TextAlign.start,
                     ),
-                  )
-                : Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: double.infinity,
-                            width: double.infinity,
-                            child: CarouselSlider(
-                              options: CarouselOptions(
-                                aspectRatio: 1.0,
-                                enlargeCenterPage: true,
-                                scrollDirection: Axis.horizontal,
-                                autoPlay: false,
-                              ),
-                              items: [
-                                ...List.generate(
-                                  hotelInfo!.photos.length,
-                                  (index) => Image.asset(
-                                    'assets/images/${hotelInfo!.photos[index]}',
-                                    alignment: Alignment.topCenter,
-                                    fit: BoxFit.fill,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HotelAddressWidget(hotelAddress: hotelInfo!.address),
-                              RichText(
-                                textDirection: TextDirection.ltr,
-                                text: TextSpan(
-                                  text: "Рейтинг ",
-                                  style: const TextStyle(
-                                      fontSize: 14, color: Colors.black),
-                                  children: [
-                                    TextSpan(
-                                        text: '${hotelInfo!.rating}',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              HotelServicesWidget(hotelServices: hotelInfo!.services),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
+                  );
+                } else {
+                  return HotelViewContainer(hotelInfo: hotelInfo);
+                }
+              default:
+                return const Center(
+                  child: Text(
+                    'Контент временно недоступен',
+                    textAlign: TextAlign.start,
+                  ),
+                );
+            }
+          },
+        ),
       ),
     );
   }

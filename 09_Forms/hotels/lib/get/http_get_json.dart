@@ -45,7 +45,7 @@ class GetHotelDataInfo{
     return (data, _isError, _isLoading);
   }
 
-  Future<(HotelInfoRecognize?, bool, bool)> getDataHotelInfo({required String uuid}) async{
+  Future<(HotelInfoRecognize?, bool)> getDataHotelInfo({required String uuid}) async{
     HotelInfoRecognize? data;
     try{
       var url = Uri.https('run.mocky.io','/v3/$uuid');
@@ -56,7 +56,6 @@ class GetHotelDataInfo{
         data = HotelInfoRecognize.fromJson(jsonResponse);
 
         _isError = false;
-        _isLoading = false;
       } else {
         throw 'Request failed with status: ${response.statusCode}.';
       }
@@ -65,7 +64,7 @@ class GetHotelDataInfo{
       _isError = true;
       _isLoading = false;
     }
-    return (data, _isError, _isLoading);
+    return (data, _isError);
   }
 
 }
