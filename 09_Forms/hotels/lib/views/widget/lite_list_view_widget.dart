@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:hotels/models/hotel.dart';
+import 'package:hotels/models/models.dart';
 
 class LiteListViewWidget extends StatelessWidget {
   const LiteListViewWidget({

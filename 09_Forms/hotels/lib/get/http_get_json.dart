@@ -1,11 +1,8 @@
 import 'dart:convert' as convert;
 
-import 'package:hotels/models/hotel.dart';
-import 'package:hotels/models/hotel_address.dart';
-import 'package:hotels/models/hotel_services.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/hotel_info.dart';
+import 'package:hotels/models/models.dart';
 
 enum TypeSender{
   hotelPreviewSnd,
