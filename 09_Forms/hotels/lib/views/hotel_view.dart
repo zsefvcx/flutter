@@ -21,30 +21,19 @@ class _HotelViewState extends State<HotelView> {
   bool isLoadingClass = true;
   bool isErrorClass = false;
 
-  late HotelInfo hotelInfo;
-  late HotelAddress hotelAddress;
-  late HotelServices hotelServices;
-  late HotelCoords hotelCoords;
+  HotelInfoRecognize? hotelInfo;
 
   @override
   void initState() {
     super.initState();
     Future<void> get() async {
-      var (List<dynamic> data, isError, isLoading) =
-          await GetDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid);
-      if (data[0] is HotelInfo) {
-        hotelInfo = data[0] as HotelInfo;
+      var (HotelInfoRecognize? data, isError, isLoading) =
+          await GetHotelDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid);
+      if (data != null) {
+        hotelInfo = data;
+      } else {
+        isError = true;
       }
-      if (data[1] is HotelAddress) {
-        hotelAddress = data[1] as HotelAddress;
-      }
-      if (data[2] is HotelServices) {
-        hotelServices = data[2] as HotelServices;
-      }
-      if (data[3] is HotelCoords) {
-        hotelCoords = data[3] as HotelCoords;
-      }
-
       setState(() {
         isErrorClass = isError;
         isLoadingClass = isLoading;
@@ -86,9 +75,9 @@ class _HotelViewState extends State<HotelView> {
                               ),
                               items: [
                                 ...List.generate(
-                                  hotelInfo.photos.length,
+                                  hotelInfo!.photos.length,
                                   (index) => Image.asset(
-                                    'assets/images/${hotelInfo.photos[index]}',
+                                    'assets/images/${hotelInfo!.photos[index]}',
                                     alignment: Alignment.topCenter,
                                     fit: BoxFit.fill,
                                     width: double.infinity,
@@ -105,7 +94,7 @@ class _HotelViewState extends State<HotelView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              HotelAddressWidget(hotelAddress: hotelAddress),
+                              HotelAddressWidget(hotelAddress: hotelInfo!.address),
                               RichText(
                                 textDirection: TextDirection.ltr,
                                 text: TextSpan(
@@ -114,7 +103,7 @@ class _HotelViewState extends State<HotelView> {
                                       fontSize: 14, color: Colors.black),
                                   children: [
                                     TextSpan(
-                                        text: '${hotelInfo.rating}',
+                                        text: '${hotelInfo!.rating}',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold)),
                                   ],
@@ -123,7 +112,7 @@ class _HotelViewState extends State<HotelView> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              HotelServicesWidget(hotelServices: hotelServices),
+                              HotelServicesWidget(hotelServices: hotelInfo!.services),
                             ],
                           ),
                         ),

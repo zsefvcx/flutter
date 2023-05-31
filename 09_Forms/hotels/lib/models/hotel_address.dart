@@ -33,7 +33,7 @@ class HotelAddress{
   @JsonKey(defaultValue: 'None')
   final String zipCode;
 
-  final Map<String, dynamic> coords;
+  final HotelCoords coords;
 
   HotelAddress(
       this.country, this.street, this.city, this.zipCode, this.coords);

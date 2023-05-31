@@ -26,7 +26,7 @@ class _HotelsPreviewState extends State<HotelsPreview> {
 
   Future<void> _getInfo() async {
     var (List<HotelPreview> data, isError, isLoading) =
-    await GetDataInfo().getDataHotelPreview();
+    await GetHotelDataInfo().getDataHotelPreview();
     hotels = data;
     setState(() {
       isErrorClass = isError;

@@ -5,19 +5,14 @@ import 'package:http/http.dart' as http;
 
 import 'package:hotels/models/models.dart';
 
-enum TypeSender{
-  hotelPreviewSnd,
-  hotelInfoSnd,
-}
-
-class GetDataInfo{
+class GetHotelDataInfo{
   late bool _isError;
   late bool _isLoading;
 
   bool get isError => _isError;
   bool get isLoading => _isLoading;
 
-  GetDataInfo(){
+  GetHotelDataInfo(){
     _isError = false;
     _isLoading = true;
   }
@@ -50,24 +45,15 @@ class GetDataInfo{
     return (data, _isError, _isLoading);
   }
 
-  Future<(List<dynamic>, bool, bool)> getDataHotelInfo({required String uuid}) async{
-    List<dynamic> data = [];
+  Future<(HotelInfoRecognize?, bool, bool)> getDataHotelInfo({required String uuid}) async{
+    HotelInfoRecognize? data;
     try{
       var url = Uri.https('run.mocky.io','/v3/$uuid');
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body) as Map<String,dynamic>;
 
-        HotelInfo hotelInfo = HotelInfo.fromJson(jsonResponse);
-        HotelAddress hotelAddress = HotelAddress.fromJson(hotelInfo.address);
-        HotelServices hotelServices = HotelServices.fromJson(hotelInfo.services);
-        HotelCoords hotelCoords = HotelCoords.fromJson(hotelAddress.coords);
-        data.addAll([
-          hotelInfo,
-          hotelAddress,
-          hotelServices,
-          hotelCoords,
-        ]);
+        data = HotelInfoRecognize.fromJson(jsonResponse);
 
         _isError = false;
         _isLoading = false;

@@ -22,7 +22,7 @@ HotelAddress _$HotelAddressFromJson(Map<String, dynamic> json) => HotelAddress(
       json['street'] as String? ?? 'None',
       json['city'] as String? ?? 'None',
       json['zipCode'] as String? ?? 'None',
-      json['coords'] as Map<String, dynamic>,
+      HotelCoords.fromJson(json['coords'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$HotelAddressToJson(HotelAddress instance) =>
@@ -31,5 +31,5 @@ Map<String, dynamic> _$HotelAddressToJson(HotelAddress instance) =>
       'street': instance.street,
       'city': instance.city,
       'zipCode': instance.zipCode,
-      'coords': instance.coords,
+      'coords': instance.coords.toJson(),
     };

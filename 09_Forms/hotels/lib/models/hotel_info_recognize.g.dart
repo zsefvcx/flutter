@@ -9,11 +9,11 @@ part of 'hotel_info_recognize.dart';
 HotelInfoRecognize _$HotelInfoRecognizeFromJson(Map<String, dynamic> json) =>
     HotelInfoRecognize(
       json['uuid'] as String,
-      json['name'] as String,
+      json['name'] as String? ?? 'None',
       json['poster'] as String,
-      HotelCoords.fromJson(json['address'] as Map<String, dynamic>),
-      (json['price'] as num).toDouble(),
-      (json['rating'] as num).toDouble(),
+      HotelAddress.fromJson(json['address'] as Map<String, dynamic>),
+      (json['price'] as num?)?.toDouble() ?? 0,
+      (json['rating'] as num?)?.toDouble() ?? 0,
       HotelServices.fromJson(json['services'] as Map<String, dynamic>),
       (json['photos'] as List<dynamic>).map((e) => e as String).toList(),
     );
