@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -6,9 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hotels/get/http_get_json.dart';
 import 'package:hotels/models/models.dart';
 import 'package:hotels/views/widget/widget.dart';
-
-
-
 
 class HotelView extends StatefulWidget {
   static const routeName = '/hotel';
@@ -34,37 +30,27 @@ class _HotelViewState extends State<HotelView> {
   void initState() {
     super.initState();
     Future<void> get() async {
-      var (dynamic data, isError, isLoading) =
-      await GetDataHttp(TypeSender.hotelInfoSnd).getData('run.mocky.io',
-          '/v3/${widget.hotel.uuid}', {'q': '{https}'});
-
-      if(isError == false && data is List<dynamic> && data.length==4 &&
-           data[0] is HotelInfo &&
-           data[1] is HotelAddress &&
-           data[2] is HotelServices &&
-           data[3] is HotelCoords
-      ){
-        if(data[0] is HotelInfo){
-          hotelInfo = data[0] as HotelInfo;
-        }
-        if(data[1] is HotelAddress){
-          hotelAddress = data[1] as HotelAddress;
-        }
-        if(data[2] is HotelServices){
-          hotelServices = data[2] as HotelServices;
-        }
-        if(data[3] is HotelCoords){
-          hotelCoords = data[3] as HotelCoords;
-        }
-      } else {
-        isError = true;
-        isLoading = false;
+      var (List<dynamic> data, isError, isLoading) =
+          await GetDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid);
+      if (data[0] is HotelInfo) {
+        hotelInfo = data[0] as HotelInfo;
       }
+      if (data[1] is HotelAddress) {
+        hotelAddress = data[1] as HotelAddress;
+      }
+      if (data[2] is HotelServices) {
+        hotelServices = data[2] as HotelServices;
+      }
+      if (data[3] is HotelCoords) {
+        hotelCoords = data[3] as HotelCoords;
+      }
+
       setState(() {
         isErrorClass = isError;
         isLoadingClass = isLoading;
       });
     }
+
     get();
   }
 
@@ -85,58 +71,64 @@ class _HotelViewState extends State<HotelView> {
                 : Container(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          height: double.infinity,
-                          width: double.infinity,
-                          child: CarouselSlider(
-                            options: CarouselOptions(
-                              aspectRatio: 1.0,
-                              enlargeCenterPage: true,
-                              scrollDirection: Axis.horizontal,
-                              autoPlay: false,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            height: double.infinity,
+                            width: double.infinity,
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                aspectRatio: 1.0,
+                                enlargeCenterPage: true,
+                                scrollDirection: Axis.horizontal,
+                                autoPlay: false,
+                              ),
+                              items: [
+                                ...List.generate(
+                                  hotelInfo.photos.length,
+                                  (index) => Image.asset(
+                                    'assets/images/${hotelInfo.photos[index]}',
+                                    alignment: Alignment.topCenter,
+                                    fit: BoxFit.fill,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  ),
+                                )
+                              ],
                             ),
-                            items: [
-                              ...List.generate(
-                                hotelInfo.photos.length,
-                                (index) => Image.asset(
-                                  'assets/images/${hotelInfo.photos[index]}',
-                                  alignment: Alignment.topCenter,
-                                  fit: BoxFit.fill,
-                                  width: double.infinity,
-                                  height: double.infinity,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              HotelAddressWidget(hotelAddress: hotelAddress),
+                              RichText(
+                                textDirection: TextDirection.ltr,
+                                text: TextSpan(
+                                  text: "Рейтинг ",
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: '${hotelInfo.rating}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ],
                                 ),
-                              )
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              HotelServicesWidget(hotelServices: hotelServices),
                             ],
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HotelAddressWidget(hotelAddress: hotelAddress),
-                            RichText(
-                              textDirection: TextDirection.ltr,
-                              text: TextSpan(
-                                text: "Рейтинг ",
-                                style: const TextStyle(fontSize: 14, color: Colors.black),
-                                children: [
-                                  TextSpan(text: '${hotelInfo.rating}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 20,),
-                            HotelServicesWidget(hotelServices: hotelServices),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    )),
       ),
     );
   }

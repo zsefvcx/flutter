@@ -6,16 +6,16 @@ import 'package:hotels/views/views.dart';
 
 class RouteGenerator {
 
-  static String initialRoute = HomeView.routeName;
+  static String initialRoute = HotelsPreview.routeName;
 
   static Route<dynamic> generateRoute(settings){
     final args = settings.arguments;
 
     switch(settings.name){
-      case HomeView.routeName:
+      case HotelsPreview.routeName:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-          const HomeView(),
+          const HotelsPreview(),
         );
       case HotelView.routeName:
         if(args != null && args is Map<String, HotelPreview>){

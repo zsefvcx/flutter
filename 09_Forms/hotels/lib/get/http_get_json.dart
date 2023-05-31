@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:hotels/models/models.dart';
@@ -9,69 +10,76 @@ enum TypeSender{
   hotelInfoSnd,
 }
 
-class GetDataHttp{
+class GetDataInfo{
+  late bool _isError;
+  late bool _isLoading;
 
-  TypeSender typeSender;
+  bool get isError => _isError;
+  bool get isLoading => _isLoading;
 
-  GetDataHttp(this.typeSender);
+  GetDataInfo(){
+    _isError = false;
+    _isLoading = true;
+  }
 
-  Future<(dynamic, bool, bool)> getData(
-        String authority,
-        String unencodedPath,
-        Map<String, dynamic>? queryParameters
-      ) async {
-    bool isError = false;
-    bool isLoading = true;
-    dynamic data;
+  Future<(List<HotelPreview>, bool, bool)> getDataHotelPreview() async{
+    List<HotelPreview> data = [];
     try{
-      var url = Uri.https(authority,
-          unencodedPath, queryParameters);
+      var url = Uri.https('run.mocky.io',
+          '/v3/ac888dc5-d193-4700-b12c-abb43e289301');
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        if (typeSender == TypeSender.hotelPreviewSnd) {
-          var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
-          //print(jsonResponse);
-
-          data = jsonResponse.map((e) {
-            if (e is Map<String, dynamic>) {
-              return HotelPreview.fromJson(e);
-            } else {
-              throw 'Error received data $e';
-            }
-          }).toList();
-        } else if (typeSender == TypeSender.hotelInfoSnd){
-          var jsonResponse =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-          //print(jsonResponse);
-
-          HotelInfo hotelInfo = HotelInfo.fromJson(jsonResponse);
-          HotelAddress hotelAddress = HotelAddress.fromJson(hotelInfo.address);
-          HotelServices hotelServices = HotelServices.fromJson(hotelInfo.services);
-          HotelCoords hotelCoords = HotelCoords.fromJson(hotelAddress.coords);
-          List<dynamic> dataHotelInfo = [
-            hotelInfo,
-            hotelAddress,
-            hotelServices,
-            hotelCoords,
-          ];
-
-          data = dataHotelInfo;
-
-        } else{
-          throw 'Type data is not recognize ${data.runtimeType}.';
-        }
-
-        isLoading = false;
+        var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
+        data = jsonResponse.map((e) {
+          if (e is Map<String, dynamic>) {
+            return HotelPreview.fromJson(e);
+          } else {
+            throw 'Error received data ${e.runtimeType}';
+          }
+        }).toList();
+        _isError = false;
+        _isLoading = false;
       } else {
         throw 'Request failed with status: ${response.statusCode}.';
       }
     } catch (e, t) {
-      print('recognition error jsonResponse. Error:\n$e \n$t');
-      isError = true;
-      isLoading = false;
+      debugPrint('recognition error jsonResponse. Error:\n$e \n$t');
+      _isError = true;
+      _isLoading = false;
     }
-    return (data, isError, isLoading);
+    return (data, _isError, _isLoading);
   }
 
+  Future<(List<dynamic>, bool, bool)> getDataHotelInfo({required String uuid}) async{
+    List<dynamic> data = [];
+    try{
+      var url = Uri.https('run.mocky.io','/v3/$uuid');
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        var jsonResponse = convert.jsonDecode(response.body) as Map<String,dynamic>;
+
+        HotelInfo hotelInfo = HotelInfo.fromJson(jsonResponse);
+        HotelAddress hotelAddress = HotelAddress.fromJson(hotelInfo.address);
+        HotelServices hotelServices = HotelServices.fromJson(hotelInfo.services);
+        HotelCoords hotelCoords = HotelCoords.fromJson(hotelAddress.coords);
+        data.addAll([
+          hotelInfo,
+          hotelAddress,
+          hotelServices,
+          hotelCoords,
+        ]);
+
+        _isError = false;
+        _isLoading = false;
+      } else {
+        throw 'Request failed with status: ${response.statusCode}.';
+      }
+    } catch (e, t) {
+      debugPrint('recognition error jsonResponse. Error:\n$e \n$t');
+      _isError = true;
+      _isLoading = false;
+    }
+    return (data, _isError, _isLoading);
+  }
 
 }
