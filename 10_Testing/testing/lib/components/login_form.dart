@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:testing/utils/validate_email.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key key}) : super(key: key);
+  LoginForm({super.key});
 
   @override
-  _LoginFormState createState() => _LoginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
@@ -37,14 +37,14 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(labelText: 'Phone'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
-              WhitelistingTextInputFormatter.digitsOnly
+              FilteringTextInputFormatter.digitsOnly
             ],
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text('Отправить'),
             onPressed: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
                 setState(() {
                   successMessage = true;
                 });

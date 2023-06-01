@@ -3,17 +3,17 @@ import 'package:flutter/services.dart';
 import 'package:testing/utils/validate_email.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm({Key key}) : super(key: key);
+  RegisterForm({super.key});
 
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSuccess = false;
   void _handleSubmit() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _isSuccess = true;
       });
@@ -43,7 +43,7 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
-              WhitelistingTextInputFormatter.digitsOnly
+              FilteringTextInputFormatter.digitsOnly
             ],
             decoration: InputDecoration(labelText: 'Phone'),
             validator: (value) {
@@ -59,7 +59,7 @@ class _RegisterFormState extends State<RegisterForm> {
               return null;
             },
           ),
-          RaisedButton(
+          ElevatedButton(
             child: Text('Отправить'),
             onPressed: _handleSubmit,
           ),
