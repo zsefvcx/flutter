@@ -40,14 +40,7 @@ class _HotelsPreviewState extends State<HotelsPreview> {
           ],
         ),
         body: FutureBuilder(
-          future: GetIt.I<AbstractGetHotelDataInfo>()
-            .getDataHotelPreview().timeout(
-               const Duration(seconds: 5),
-               onTimeout: () {
-                 debugPrint('time out getDataHotelPreview.');
-                 return (<HotelPreview>[], true);
-               },
-          ),
+          future: GetIt.I<AbstractGetHotelDataInfo>().getDataHotelPreviewWithTimeOut(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:

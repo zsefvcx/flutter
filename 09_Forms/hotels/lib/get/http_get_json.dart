@@ -9,6 +9,7 @@ import 'package:hotels/models/models.dart';
 class GetHotelDataInfo implements AbstractGetHotelDataInfo{
 
   final String _authority = 'run.mocky.io';
+  final int _timeOut = 5;
 
   @override
   Future<(List<HotelPreview>, bool)> getDataHotelPreview() async{
@@ -39,6 +40,15 @@ class GetHotelDataInfo implements AbstractGetHotelDataInfo{
   }
 
   @override
+  Future<(List<HotelPreview>, bool)> getDataHotelPreviewWithTimeOut() async =>
+    await getDataHotelPreview().timeout(Duration(seconds: _timeOut),
+      onTimeout: () {
+        debugPrint('time out getDataHotelPreview.');
+        return (<HotelPreview>[], true);
+      },
+    );
+
+  @override
   Future<(HotelInfoRecognize?, bool)> getDataHotelInfo({required String uuid}) async{
     HotelInfoRecognize? data;
     bool isError = true;
@@ -59,5 +69,14 @@ class GetHotelDataInfo implements AbstractGetHotelDataInfo{
     }
     return (data, isError);
   }
+
+  @override
+  Future<(HotelInfoRecognize?, bool)> getDataHotelInfoWithTimeOut({required String uuid}) async =>
+      await getDataHotelInfo(uuid: uuid).timeout(Duration(seconds: _timeOut),
+        onTimeout: () {
+          debugPrint('time out getDataHotelInfo.');
+          return (null, true);
+        },
+      );
 
 }

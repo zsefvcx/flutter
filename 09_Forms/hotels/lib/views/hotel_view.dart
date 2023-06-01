@@ -25,13 +25,7 @@ class _HotelViewState extends State<HotelView> {
         appBar: AppBar(),
         body: FutureBuilder(
           future: GetIt.I<AbstractGetHotelDataInfo>().
-          getDataHotelInfo(uuid: widget._hotel.uuid).timeout(
-            const Duration(seconds: 5),
-            onTimeout: () {
-              debugPrint('time out getDataHotelInfo.');
-              return (null, true);
-            },
-          ),
+          getDataHotelInfoWithTimeOut(uuid: widget._hotel.uuid),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
