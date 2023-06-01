@@ -9,9 +9,9 @@ class HotelView extends StatefulWidget {
   static const routeName = '/hotel';
   const HotelView({
     Key? key,
-    required this.hotel,
-  }) : super(key: key);
-  final HotelPreview hotel;
+    required HotelPreview hotel,
+  }) : _hotel = hotel, super(key: key);
+  final HotelPreview _hotel;
   @override
   State<HotelView> createState() => _HotelViewState();
 }
@@ -24,7 +24,14 @@ class _HotelViewState extends State<HotelView> {
       child: Scaffold(
         appBar: AppBar(),
         body: FutureBuilder(
-          future: GetIt.I<AbstractGetHotelDataInfo>().getDataHotelInfo(uuid: widget.hotel.uuid),
+          future: GetIt.I<AbstractGetHotelDataInfo>().
+          getDataHotelInfo(uuid: widget._hotel.uuid).timeout(
+            const Duration(seconds: 5),
+            onTimeout: () {
+              debugPrint('time out getDataHotelInfo.');
+              return (null, true);
+            },
+          ),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:

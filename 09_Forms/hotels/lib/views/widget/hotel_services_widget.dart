@@ -5,13 +5,13 @@ import 'package:hotels/models/hotel_services.dart';
 class HotelServicesWidget extends StatelessWidget {
   const HotelServicesWidget({
     super.key,
-    required this.hotelServices,
-  });
+    required HotelServices hotelServices,
+  }) : _hotelServices = hotelServices;
 
-  final HotelServices hotelServices;
+  final HotelServices _hotelServices;
 
-  final textStyleLL = const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
-  final textStyleHL = const TextStyle(fontSize: 23, fontWeight: FontWeight.w400);
+  final _textStyleLL = const TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+  final _textStyleHL = const TextStyle(fontSize: 23, fontWeight: FontWeight.w400);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class HotelServicesWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text('Сервисы', style: textStyleHL),
+        Text('Сервисы', style: _textStyleHL),
         const SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -31,16 +31,16 @@ class HotelServicesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('Платные', style: textStyleLL,),
+                  Text('Платные', style: _textStyleLL,),
                   const SizedBox(height: 10,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ...List.generate(
-                          hotelServices.paid.length,
+                          _hotelServices.paid.length,
                               (index) =>
-                              Text( hotelServices.paid[index]))
+                              Text( _hotelServices.paid[index]))
                     ],
                   ),
                 ],
@@ -52,16 +52,16 @@ class HotelServicesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text('Бесплатно', style: textStyleLL,),
+                  Text('Бесплатно', style: _textStyleLL,),
                   const SizedBox(height: 10,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ...List.generate(
-                          hotelServices.free.length,
+                          _hotelServices.free.length,
                               (index) =>
-                              Text( hotelServices.free[index]))
+                              Text( _hotelServices.free[index]))
                     ],
                   ),
                 ],

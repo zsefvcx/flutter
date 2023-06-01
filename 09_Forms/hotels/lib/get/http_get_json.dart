@@ -8,14 +8,15 @@ import 'package:hotels/models/models.dart';
 
 class GetHotelDataInfo implements AbstractGetHotelDataInfo{
 
+  final String _authority = 'run.mocky.io';
+
   @override
   Future<(List<HotelPreview>, bool)> getDataHotelPreview() async{
     List<HotelPreview> data = [];
     bool isError = true;
-    String authority = 'run.mocky.io';
     String unencodedPath = '/v3/ac888dc5-d193-4700-b12c-abb43e289301';
     try{
-      var url = Uri.https(authority, unencodedPath);
+      var url = Uri.https(_authority, unencodedPath);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
@@ -41,10 +42,9 @@ class GetHotelDataInfo implements AbstractGetHotelDataInfo{
   Future<(HotelInfoRecognize?, bool)> getDataHotelInfo({required String uuid}) async{
     HotelInfoRecognize? data;
     bool isError = true;
-    String authority = 'run.mocky.io';
     String unencodedPath = '/v3/$uuid';
     try{
-      var url = Uri.https(authority, unencodedPath);
+      var url = Uri.https(_authority, unencodedPath);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body) as Map<String,dynamic>;

@@ -16,8 +16,7 @@ class HotelsPreview extends StatefulWidget {
 }
 
 class _HotelsPreviewState extends State<HotelsPreview> {
-  final double minSizeWidth = 500;
-  bool listViewModeButton = true;
+  bool _listViewModeButton = true;
 
   @override
   void initState() {
@@ -31,17 +30,24 @@ class _HotelsPreviewState extends State<HotelsPreview> {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: () => setState(() => listViewModeButton = true),
+              onPressed: () => setState(() => _listViewModeButton = true),
               icon: const Icon(Icons.list),
             ),
             IconButton(
-              onPressed: () => setState(() => listViewModeButton = false),
+              onPressed: () => setState(() => _listViewModeButton = false),
               icon: const Icon(Icons.apps),
             ),
           ],
         ),
         body: FutureBuilder(
-          future: GetIt.I<AbstractGetHotelDataInfo>().getDataHotelPreview(),
+          future: GetIt.I<AbstractGetHotelDataInfo>()
+            .getDataHotelPreview().timeout(
+               const Duration(seconds: 5),
+               onTimeout: () {
+                 debugPrint('time out getDataHotelPreview.');
+                 return (<HotelPreview>[], true);
+               },
+          ),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -66,7 +72,7 @@ class _HotelsPreviewState extends State<HotelsPreview> {
                     child: Text('Контент временно недоступен'),
                   );
                 } else {
-                  return HotelsGridView(listViewModeButton: listViewModeButton, hotels: hotels);
+                  return HotelsGridView(listViewModeButton: _listViewModeButton, hotels: hotels);
                 }
               default:
                 return const Center(

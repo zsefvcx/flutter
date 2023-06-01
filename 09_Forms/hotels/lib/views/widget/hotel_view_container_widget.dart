@@ -7,10 +7,10 @@ import 'package:hotels/views/widget/widget.dart';
 class HotelViewContainer extends StatelessWidget {
   const HotelViewContainer({
     super.key,
-    required this.hotelInfo,
-  });
+    required HotelInfoRecognize hotelInfo,
+  }) : _hotelInfo = hotelInfo;
 
-  final HotelInfoRecognize hotelInfo;
+  final HotelInfoRecognize _hotelInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class HotelViewContainer extends StatelessWidget {
                   ),
                   items: [
                     ...List.generate(
-                      hotelInfo.photos.length,
+                      _hotelInfo.photos.length,
                           (index) => Image.asset(
-                        'assets/images/${hotelInfo.photos[index]}',
+                        'assets/images/${_hotelInfo.photos[index]}',
                         alignment: Alignment.topCenter,
                         fit: BoxFit.fill,
                         width: double.infinity,
@@ -52,7 +52,7 @@ class HotelViewContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HotelAddressWidget(
-                      hotelAddress: hotelInfo.address),
+                      hotelAddress: _hotelInfo.address),
                   RichText(
                     textDirection: TextDirection.ltr,
                     text: TextSpan(
@@ -61,7 +61,7 @@ class HotelViewContainer extends StatelessWidget {
                           fontSize: 14, color: Colors.black),
                       children: [
                         TextSpan(
-                            text: '${hotelInfo.rating}',
+                            text: '${_hotelInfo.rating}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold)),
                       ],
@@ -71,7 +71,7 @@ class HotelViewContainer extends StatelessWidget {
                     height: 20,
                   ),
                   HotelServicesWidget(
-                      hotelServices: hotelInfo.services),
+                      hotelServices: _hotelInfo.services),
                 ],
               ),
             ),

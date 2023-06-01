@@ -5,12 +5,12 @@ import 'package:hotels/models/models.dart';
 class LiteListViewWidget extends StatelessWidget {
   const LiteListViewWidget({
     super.key,
-    required this.hotel,
-    required this.liteType,
-  });
+    required HotelPreview hotel,
+    required bool liteType,
+  }) : _hotel = hotel, _liteType = liteType;
 
-  final bool liteType;
-  final HotelPreview hotel;
+  final bool _liteType;
+  final HotelPreview _hotel;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class LiteListViewWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: liteType?3:1,
+            flex: _liteType?3:1,
             child: SizedBox(
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -39,7 +39,7 @@ class LiteListViewWidget extends StatelessWidget {
                   topLeft: Radius.circular(15),
                 ),
                 child: Image.asset(
-                  'assets/images/${hotel.poster}',
+                  'assets/images/${_hotel.poster}',
                   alignment: Alignment.topCenter,
                   fit: BoxFit.fill,
                   width: double.infinity,
@@ -50,7 +50,7 @@ class LiteListViewWidget extends StatelessWidget {
           ),
           Expanded(
             flex: 1,
-            child: liteType?FullWidget(hotel: hotel):LiteWidget(hotel: hotel),
+            child: _liteType?FullWidget(hotel: _hotel):LiteWidget(hotel: _hotel),
           ),
         ],
       ),

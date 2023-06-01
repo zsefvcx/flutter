@@ -1,2 +1,2 @@
-export 'hotels_preview_view.dart';
+export 'hotels_preview.dart';
 export 'hotel_view.dart';
