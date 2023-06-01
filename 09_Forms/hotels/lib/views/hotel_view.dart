@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:hotels/get/http_get_json.dart';
+import 'package:hotels/get/get.dart';
 import 'package:hotels/models/models.dart';
 import 'package:hotels/views/widget/widget.dart';
 
@@ -23,7 +24,7 @@ class _HotelViewState extends State<HotelView> {
       child: Scaffold(
         appBar: AppBar(),
         body: FutureBuilder(
-          future: GetHotelDataInfo().getDataHotelInfo(uuid: widget.hotel.uuid),
+          future: GetIt.I<AbstractGetHotelDataInfo>().getDataHotelInfo(uuid: widget.hotel.uuid),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -45,20 +46,14 @@ class _HotelViewState extends State<HotelView> {
                 }
                 if (isErrorClass) {
                   return const Center(
-                    child: Text(
-                      'Контент временно недоступен',
-                      textAlign: TextAlign.start,
-                    ),
+                    child: Text('Контент временно недоступен'),
                   );
                 } else {
                   return HotelViewContainer(hotelInfo: hotelInfo);
                 }
               default:
                 return const Center(
-                  child: Text(
-                    'Контент временно недоступен',
-                    textAlign: TextAlign.start,
-                  ),
+                  child: Text('Контент временно недоступен'),
                 );
             }
           },

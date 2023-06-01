@@ -1,25 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:hotels/hotels_app.dart';
 
-import 'package:hotels/route_generator.dart';
+import 'get/get.dart';
 
 void main() {
+  GetIt.I.registerLazySingleton<AbstractGetHotelDataInfo>(() => GetHotelDataInfo());
   runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
-    );
-  }
 }

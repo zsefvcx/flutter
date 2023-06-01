@@ -1,27 +1,21 @@
 import 'dart:convert' as convert;
 
 import 'package:flutter/cupertino.dart';
+import 'package:hotels/get/abstract_http_get_json.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:hotels/models/models.dart';
 
-class GetHotelDataInfo{
-  late bool _isError;
-  late bool _isLoading;
+class GetHotelDataInfo implements AbstractGetHotelDataInfo{
 
-  bool get isError => _isError;
-  bool get isLoading => _isLoading;
-
-  GetHotelDataInfo(){
-    _isError = false;
-    _isLoading = true;
-  }
-
-  Future<(List<HotelPreview>, bool, bool)> getDataHotelPreview() async{
+  @override
+  Future<(List<HotelPreview>, bool)> getDataHotelPreview() async{
     List<HotelPreview> data = [];
+    bool isError = true;
+    String authority = 'run.mocky.io';
+    String unencodedPath = '/v3/ac888dc5-d193-4700-b12c-abb43e289301';
     try{
-      var url = Uri.https('run.mocky.io',
-          '/v3/ac888dc5-d193-4700-b12c-abb43e289301');
+      var url = Uri.https(authority, unencodedPath);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body) as List<dynamic>;
@@ -32,39 +26,38 @@ class GetHotelDataInfo{
             throw 'Error received data ${e.runtimeType}';
           }
         }).toList();
-        _isError = false;
-        _isLoading = false;
+        isError = false;
       } else {
         throw 'Request failed with status: ${response.statusCode}.';
       }
     } catch (e, t) {
       debugPrint('recognition error jsonResponse. Error:\n$e \n$t');
-      _isError = true;
-      _isLoading = false;
+      isError = true;
     }
-    return (data, _isError, _isLoading);
+    return (data, isError);
   }
 
+  @override
   Future<(HotelInfoRecognize?, bool)> getDataHotelInfo({required String uuid}) async{
     HotelInfoRecognize? data;
+    bool isError = true;
+    String authority = 'run.mocky.io';
+    String unencodedPath = '/v3/$uuid';
     try{
-      var url = Uri.https('run.mocky.io','/v3/$uuid');
+      var url = Uri.https(authority, unencodedPath);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         var jsonResponse = convert.jsonDecode(response.body) as Map<String,dynamic>;
-
         data = HotelInfoRecognize.fromJson(jsonResponse);
-
-        _isError = false;
+        isError = false;
       } else {
         throw 'Request failed with status: ${response.statusCode}.';
       }
     } catch (e, t) {
       debugPrint('recognition error jsonResponse. Error:\n$e \n$t');
-      _isError = true;
-      _isLoading = false;
+      isError = true;
     }
-    return (data, _isError);
+    return (data, isError);
   }
 
 }

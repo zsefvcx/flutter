@@ -1,12 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
-
-import 'package:hotels/get/http_get_json.dart';
+import 'package:hotels/get/get.dart';
 
 import 'package:hotels/models/hotel.dart';
 import 'package:hotels/views/widget/widget.dart';
-
 
 class HotelsPreview extends StatefulWidget {
   static const routeName = '/';
@@ -18,25 +17,10 @@ class HotelsPreview extends StatefulWidget {
 
 class _HotelsPreviewState extends State<HotelsPreview> {
   final double minSizeWidth = 500;
-  bool isLoadingClass = true;
-  bool isErrorClass = false;
-
-  List<HotelPreview> hotels = [];
   bool listViewModeButton = true;
-
-  Future<void> _getInfo() async {
-    var (List<HotelPreview> data, isError, isLoading) =
-    await GetHotelDataInfo().getDataHotelPreview();
-    hotels = data;
-    setState(() {
-      isErrorClass = isError;
-      isLoadingClass = isLoading;
-    });
-  }
 
   @override
   void initState() {
-    _getInfo();
     super.initState();
   }
 
@@ -56,12 +40,41 @@ class _HotelsPreviewState extends State<HotelsPreview> {
             ),
           ],
         ),
-        body: (isLoadingClass && !isErrorClass)
-            ? const Center(child: CircularProgressIndicator())
-            : isErrorClass?const Center(
-                child: Text('Контент временно недоступен', textAlign: TextAlign.start, ),
-        ):
-        HotelsGridView(listViewModeButton: listViewModeButton, hotels: hotels),
+        body: FutureBuilder(
+          future: GetIt.I<AbstractGetHotelDataInfo>().getDataHotelPreview(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                bool isErrorClass = true;
+                List<HotelPreview> hotels = [];
+                var data = snapshot.data;
+                if (data != null) {
+                    isErrorClass = data.$2;
+                  var hotelsData = data.$1;
+                  if (hotelsData.isNotEmpty) {
+                    hotels.addAll(hotelsData);
+                  } else {
+                    isErrorClass = true;
+                  }
+                }
+                if (isErrorClass) {
+                  return const Center(
+                    child: Text('Контент временно недоступен'),
+                  );
+                } else {
+                  return HotelsGridView(listViewModeButton: listViewModeButton, hotels: hotels);
+                }
+              default:
+                return const Center(
+                  child: Text('Контент временно недоступен'),
+                );
+            }
+           },
+        ),
       ),
     );
   }
