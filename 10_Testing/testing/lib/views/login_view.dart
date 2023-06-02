@@ -54,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
                     Text(
                       _formType == FormType.login
                           ? 'Уже есть аккаунт?'
-                          : 'Еще нет аккаунта? ',
+                          : 'Еще нет аккаунта?',
                     ),
                     TextButton(
                       onPressed: _switchForm,

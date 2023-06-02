@@ -44,6 +44,7 @@ class _LoginFormState extends State<LoginForm> {
             ],
           ),
           ElevatedButton(
+            key: const Key('buttonSendField'),
             child: const Text('Отправить'),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
