@@ -18,15 +18,15 @@ void main() {
       //1. Тесты проверки формы, что все есть и ничего не забыли
       expect(find.text('Вход',findRichText: true), findsOneWidget);
       expect(find.text('Email',findRichText: true), findsOneWidget);
-      expect(find.byKey(Key('textEmailField')), findsOneWidget);
+      expect(find.byKey(const Key('textEmailField')), findsOneWidget);
       expect(tester.widget<TextFormField>(find.byKey(const Key('textEmailField'))).initialValue, '');
       expect( find.text('Введите email', findRichText: true), findsNothing);
       expect( find.text('Поле email заполнено не корректно', findRichText: true), findsNothing);
       expect(find.text('Phone',findRichText: true), findsOneWidget);
-      expect(find.byKey(Key('textPhoneField')), findsOneWidget);
+      expect(find.byKey(const Key('textPhoneField')), findsOneWidget);
       expect(tester.widget<TextFormField>(find.byKey(const Key('textPhoneField'))).initialValue, '');
       expect( find.text('Введите телефон', findRichText: true), findsNothing);
-      expect(find.byKey(Key('buttonSendField')), findsOneWidget);
+      expect(find.byKey(const Key('buttonSendField')), findsOneWidget);
       expect(find.text('Отправить'), findsOneWidget);
       expect(find.text('Добро пожаловать'), findsNothing);
       expect(find.text('Уже есть аккаунт?'), findsNothing);
