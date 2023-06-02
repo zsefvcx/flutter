@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:testing/utils/validate_email.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm({super.key});
+  const RegisterForm({super.key});
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isSuccess = false;
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
@@ -27,14 +27,14 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           TextFormField(
-            decoration: InputDecoration(labelText: 'First name'),
+            decoration: const InputDecoration(labelText: 'First name'),
             validator: (value) {
               if (value == '') return 'Введите имя';
               return null;
             },
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Last name'),
+            decoration: const InputDecoration(labelText: 'Last name'),
             validator: (value) {
               if (value == '') return 'Введите фамилию';
               return null;
@@ -45,14 +45,14 @@ class _RegisterFormState extends State<RegisterForm> {
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
-            decoration: InputDecoration(labelText: 'Phone'),
+            decoration: const InputDecoration(labelText: 'Phone'),
             validator: (value) {
               if (value == '') return 'Заполните поле телефон';
               return null;
             },
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Email'),
+            decoration: const InputDecoration(labelText: 'Email'),
             validator: (value) {
               if (value == '') return 'Заполните поле email';
               if (!validateEmail(value)) return 'Емейл не корректный';
@@ -60,10 +60,10 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           ElevatedButton(
-            child: Text('Отправить'),
             onPressed: _handleSubmit,
+            child: const Text('Отправить'),
           ),
-          if (_isSuccess) Text('Вы успешно зарегистрировались')
+          if (_isSuccess) const Text('Вы успешно зарегистрировались')
         ],
       ),
     );

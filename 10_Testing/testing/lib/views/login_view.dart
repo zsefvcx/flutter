@@ -5,7 +5,7 @@ import 'package:testing/components/register_form.dart';
 enum FormType { login, register }
 
 class LoginView extends StatefulWidget {
-  LoginView({super.key});
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -14,7 +14,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   FormType _formType = FormType.login;
 
-  _switchForm() {
+  void _switchForm() {
     setState(() {
       _formType =
           _formType == FormType.login ? FormType.register : FormType.login;
@@ -43,8 +43,8 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                       _formType == FormType.login
-                          ? LoginForm()
-                          : RegisterForm(),
+                          ? const LoginForm()
+                          : const RegisterForm(),
                     ],
                   ),
                 ),
@@ -57,6 +57,7 @@ class _LoginViewState extends State<LoginView> {
                           : 'Еще нет аккаунта? ',
                     ),
                     TextButton(
+                      onPressed: _switchForm,
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
@@ -66,7 +67,6 @@ class _LoginViewState extends State<LoginView> {
                           )
                         ], style: Theme.of(context).textTheme.bodyMedium),
                       ),
-                      onPressed: _switchForm,
                     ),
                   ],
                 ),

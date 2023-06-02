@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:testing/utils/validate_email.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({super.key});
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -20,28 +20,31 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: <Widget>[
           TextFormField(
+            key: const Key('textEmailField'),
             validator: (value) {
               if (value == '') return 'Введите email';
-              if (!validateEmail(value))
+              if (!validateEmail(value)) {
                 return 'Поле email заполнено не корректно';
+              }
               return null;
             },
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(labelText: 'Email'),
+            decoration: const InputDecoration(labelText: 'Email'),
           ),
           TextFormField(
+            key: const Key('textPhoneField'),
             validator: (value) {
               if (value == '') return 'Введите телефон';
               return null;
             },
-            decoration: InputDecoration(labelText: 'Phone'),
+            decoration: const InputDecoration(labelText: 'Phone'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
           ),
           ElevatedButton(
-            child: Text('Отправить'),
+            child: const Text('Отправить'),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
@@ -51,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
               }
             },
           ),
-          if (successMessage) Text('Добро пожаловать'),
+          if (successMessage) const Text('Добро пожаловать'),
         ],
       ),
     );
