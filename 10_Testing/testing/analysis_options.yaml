@@ -19,8 +19,8 @@ linter:
 
 #Excluding files
 analyzer:
-  exclude:
-    - test/**
+  #exclude:
+  #  - test/**
   #  - lib/client.dart
   #  - lib/server/*.g.dart
 

@@ -34,11 +34,13 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             key: const Key('textPhoneField'),
             validator: (value) {
-              if (value == '') return 'Введите телефон';
+              String val = value??'';
+              if (val == '' || val.length<3 || val.length>16) return 'Введите телефон';
               return null;
             },
             decoration: const InputDecoration(labelText: 'Phone'),
             keyboardType: TextInputType.number,
+            maxLines: 1,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
@@ -50,7 +52,7 @@ class _LoginFormState extends State<LoginForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 setState(() {
-                  successMessage = true;
+                  successMessage = !successMessage;
                 });
               }
             },

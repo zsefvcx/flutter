@@ -15,7 +15,7 @@ class _RegisterFormState extends State<RegisterForm> {
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
       setState(() {
-        _isSuccess = true;
+        _isSuccess = !_isSuccess;
       });
     }
   }
@@ -27,6 +27,7 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Column(
         children: [
           TextFormField(
+            key: const Key('textFirstNameField'),
             decoration: const InputDecoration(labelText: 'First name'),
             validator: (value) {
               if (value == '') return 'Введите имя';
@@ -34,6 +35,7 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           TextFormField(
+            key: const Key('textLastNameField'),
             decoration: const InputDecoration(labelText: 'Last name'),
             validator: (value) {
               if (value == '') return 'Введите фамилию';
@@ -41,25 +43,29 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           TextFormField(
+            key: const Key('textPhoneField'),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
             ],
             decoration: const InputDecoration(labelText: 'Phone'),
             validator: (value) {
-              if (value == '') return 'Заполните поле телефон';
+              String val = value??'';
+              if (val == '' || val.length<3 || val.length>16) return 'Заполните поле телефон';
               return null;
             },
           ),
           TextFormField(
+            key: const Key('textEmailField'),
             decoration: const InputDecoration(labelText: 'Email'),
             validator: (value) {
               if (value == '') return 'Заполните поле email';
-              if (!validateEmail(value)) return 'Емейл не корректный';
+              if (!validateEmail(value)) return 'Поле email заполнено не корректно';
               return null;
             },
           ),
           ElevatedButton(
+            key: const Key('buttonSendField'),
             onPressed: _handleSubmit,
             child: const Text('Отправить'),
           ),

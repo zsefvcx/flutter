@@ -52,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _formType == FormType.login
+                      _formType != FormType.login
                           ? 'Уже есть аккаунт?'
                           : 'Еще нет аккаунта?',
                     ),
@@ -61,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                       child: RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                            text: _formType == FormType.login
+                            text: _formType != FormType.login
                                 ? 'Войти'
                                 : 'Регистрация',
                           )
