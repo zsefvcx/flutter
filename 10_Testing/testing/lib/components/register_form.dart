@@ -20,6 +20,11 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 
+  final TextEditingController _textEmailFieldController = TextEditingController();
+  final TextEditingController _textPhoneFieldController = TextEditingController();
+  final TextEditingController _textFirstNameFieldController = TextEditingController();
+  final TextEditingController _textLastNameFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -28,6 +33,7 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           TextFormField(
             key: const Key('textFirstNameField'),
+            controller: _textFirstNameFieldController,
             decoration: const InputDecoration(labelText: 'First name'),
             validator: (value) {
               if (value == '') return 'Введите имя';
@@ -36,6 +42,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           TextFormField(
             key: const Key('textLastNameField'),
+            controller: _textLastNameFieldController,
             decoration: const InputDecoration(labelText: 'Last name'),
             validator: (value) {
               if (value == '') return 'Введите фамилию';
@@ -44,6 +51,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           TextFormField(
             key: const Key('textPhoneField'),
+            controller: _textPhoneFieldController,
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
               FilteringTextInputFormatter.digitsOnly
@@ -57,6 +65,7 @@ class _RegisterFormState extends State<RegisterForm> {
           ),
           TextFormField(
             key: const Key('textEmailField'),
+            controller: _textEmailFieldController,
             decoration: const InputDecoration(labelText: 'Email'),
             validator: (value) {
               if (value == '') return 'Заполните поле email';

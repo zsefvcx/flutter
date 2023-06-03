@@ -15,7 +15,7 @@ void main() {
         ],
       ));
       // TODO: write tests
-      //1. Тесты проверки формы, что все есть и ничего не забыли
+      //1. Валидация формы, все есть и ничего не забыли
       expect(find.text('Вход',findRichText: true), findsOneWidget);
       expect(find.text('Email',findRichText: true), findsOneWidget);
       expect(find.byKey(const Key('textEmailField')), findsOneWidget);
@@ -34,14 +34,16 @@ void main() {
       expect(find.text('Войти',findRichText: true), findsNothing);
       expect(find.text('Регистрация',findRichText: true), findsOneWidget);
 
-      //Email и Phone Проверка на невалидность
+      //Email и Phone
       //2. Тест начального состояния что автоматически не логиниться с пустыми полями
       await tester.tap(find.byKey(const Key('buttonSendField')));
       await tester.pumpAndSettle();
       expect( find.text('Email',findRichText: true), findsOneWidget);
       expect( find.text('Введите email', findRichText: true), findsOneWidget);
+      expect( find.text('Поле email заполнено не корректно', findRichText: true), findsNothing);
       expect( find.text('Phone',findRichText: true), findsOneWidget);
       expect( find.text('Введите телефон', findRichText: true), findsOneWidget);
+      expect(find.text('Добро пожаловать'), findsNothing);
 
       //3 Проверка валидного Email адреса
       Future<void> testWidgetEmail0(WidgetTester tester, String email) async{

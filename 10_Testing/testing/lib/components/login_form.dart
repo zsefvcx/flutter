@@ -13,6 +13,9 @@ class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool successMessage = false;
 
+  final TextEditingController _textEmailFieldController = TextEditingController();
+  final TextEditingController _textPhoneFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -21,6 +24,7 @@ class _LoginFormState extends State<LoginForm> {
         children: <Widget>[
           TextFormField(
             key: const Key('textEmailField'),
+            controller: _textEmailFieldController,
             validator: (value) {
               if (value == '') return 'Введите email';
               if (!validateEmail(value)) {
@@ -33,6 +37,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextFormField(
             key: const Key('textPhoneField'),
+            controller: _textPhoneFieldController,
             validator: (value) {
               String val = value??'';
               if (val == '' || val.length<3 || val.length>16) return 'Введите телефон';
