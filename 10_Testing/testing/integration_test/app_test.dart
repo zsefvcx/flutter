@@ -61,7 +61,7 @@ void main() {
               const Key('buttonSendField'));
           expect(filedFinderSend, findsOneWidget);
 
-          ///flutter drive --target=test_driver/app.dart
+          ///flutter test integration_test/app_test.dart
 
           //Задание
           //     В поле email должен быть валидный email-адрес, и оно не должно быть пустым.
@@ -115,7 +115,7 @@ void main() {
           final Finder filedLastName = find.byKey(const Key('textLastNameField'));
           expect(filedLastName, findsOneWidget);
 
-          ///flutter drive --target=test_driver/app.dart
+          ///flutter test integration_test/app_test.dart
 
           //Задание
           //     В поле email должен быть валидный email-адрес, и оно не должно быть пустым.
