@@ -28,6 +28,8 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
+  flutter_driver:
+    sdk: flutter
   test: any
   flutter_lints: ^2.0.0
 

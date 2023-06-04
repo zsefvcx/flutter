@@ -59,6 +59,7 @@ class _LoginViewState extends State<LoginView> {
                     TextButton(
                       onPressed: _switchForm,
                       child: RichText(
+                        key: const Key('RichText'),
                         text: TextSpan(children: [
                           TextSpan(
                             text: _formType != FormType.login

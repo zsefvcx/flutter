@@ -10,6 +10,8 @@ import 'package:testing/main.dart' as app;
 //https://docs.flutter.dev/cookbook/testing/integration/introduction
 //https://docs.flutter.dev/testing/integration-tests
 //https://docs.flutter.dev/testing
+//https://github.com/flutter/flutter/tree/main/packages/integration_test#usage
+
 //flutter test integration_test/app_test.dart
 
 /*final emailField = find.ancestor(
