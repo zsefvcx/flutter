@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hero_card/space.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,18 +17,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeView(title: 'Animations'),
+      home: const HomeView(title: 'Animations'),
     );
   }
 }
 
 class HomeView extends StatefulWidget {
-  HomeView({Key key, this.title}) : super(key: key);
+  const HomeView({super.key, required this.title});
 
   final String title;
 
   @override
-  _HomeViewState createState() => _HomeViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
