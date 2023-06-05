@@ -36,6 +36,9 @@ void main() {
         await driver.waitFor(find.text(''));
         await driver.enterText('test@test.tst');
         await driver.waitFor(find.text('test@test.tst'));
+        await Future.delayed(const Duration(seconds : 5), () {
+
+        },);
       },
     );
     test(
@@ -45,12 +48,18 @@ void main() {
         await driver.waitFor(find.text(''));
         await driver.enterText('88008888080');
         await driver.waitFor(find.text('88008888080'));
+        await Future.delayed(const Duration(seconds : 5), () {
+
+        },);
       },
     );
     test(
       'Test tap on buttonSend',
       () async {
         await driver.tap(filedFinderSend);
+        await Future.delayed(const Duration(seconds : 5), () {
+
+        },);
       },
     );
     test(
@@ -58,6 +67,9 @@ void main() {
       () async {
         final success = find.text('Добро пожаловать');
         expect(await driver.getText(success), 'Добро пожаловать');
+        await Future.delayed(const Duration(seconds : 5), () {
+
+        },);
       },
     );
   });
