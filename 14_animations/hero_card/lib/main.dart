@@ -113,12 +113,10 @@ class _HomeViewState extends State<HomeView> {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 0, 70, 0),
                                 child: Center(
-                                  child: Material(
-                                    child: Text(
-                                      spaces[i].description,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                  child: Text(
+                                    spaces[i].description,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ),
@@ -209,14 +207,13 @@ class DetailsView extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Material(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 100, 0),
-                            child: Text(
-                              _data.description,
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 60, 0),
+                          child: Text(
+                            _data.description,
+                            maxLines: 5,
+
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -225,8 +222,8 @@ class DetailsView extends StatelessWidget {
                   Positioned(
                     width: 40,
                     height: 40,
-                    left: sizeWidth - 85,
-                    top: sizeHeight/2-20,
+                    left: sizeWidth - 45,
+                    top: sizeHeight/2+2,
                     child: MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
