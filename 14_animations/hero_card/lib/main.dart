@@ -43,8 +43,9 @@ class _HomeViewState extends State<HomeView> {
       body: ListView.builder(
         itemCount: spaces.length,
         itemBuilder: (context, i) {
-          return SizedBox(
+          return Container(
             height: 150,
+            color: Colors.white.withOpacity(0.0),
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 //double sizeWidth = MediaQuery.of(context).size.width*MediaQuery.of(context).devicePixelRatio;
@@ -52,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
                 return Container(
                   margin: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    //color: Colors.white.withOpacity(0.0),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
                       BoxShadow(
@@ -81,19 +82,17 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                                 child: Hero(
                                   tag: spaces[i].id,
-                                  child: Material(
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
-                                      ),
-                                      child: Image.asset(
-                                        spaces[i].image,
-                                        height: double.infinity,
-                                        width: double.infinity,
-                                        alignment: Alignment.center,
-                                        fit: BoxFit.cover,
-                                      ),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    child: Image.asset(
+                                      spaces[i].image,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      alignment: Alignment.center,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -102,19 +101,19 @@ class _HomeViewState extends State<HomeView> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: Material(
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(15),
-                                    bottomRight: Radius.circular(15),
-                                  ),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
                                 ),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 0, 70, 0),
-                                  child: Center(
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 0, 70, 0),
+                                child: Center(
+                                  child: Material(
                                     child: Text(
                                       spaces[i].description,
                                       maxLines: 1,
@@ -185,21 +184,21 @@ class DetailsView extends StatelessWidget {
                   Column(
                     children: [
                       Expanded(
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: GestureDetector(
-                            onTap: () => Navigator.of(context).pop(),
-                            child: Hero(
-                              tag: _data.id,
-                              child: SizedBox(
+                        child: Hero(
+                          tag: _data.id,
+                          child: SizedBox(
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(),
                                 child: ClipRRect(
-                                  // borderRadius: BorderRadius.all(
-                                  //   Radius.circular(sizeWidth/2),
-                                  // ),
+                                  borderRadius: const BorderRadius.all(
+                                     Radius.circular(15),
+                                  ),
                                   child: Image.asset(
                                     _data.image,
                                     height: double.infinity,
-                                    //width: double.infinity,
+                                    width: double.infinity,
                                     alignment: Alignment.topLeft,
                                     fit: BoxFit.fill,
                                   ),
