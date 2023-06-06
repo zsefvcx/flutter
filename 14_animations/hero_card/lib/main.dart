@@ -169,8 +169,7 @@ class DetailsView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black54,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
+      body: SafeArea(
         child: Material(
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -182,23 +181,39 @@ class DetailsView extends StatelessWidget {
                   Column(
                     children: [
                       Expanded(
-                        child: Hero(
-                          tag: _data.id,
-                          child: SizedBox(
-                            child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: GestureDetector(
-                                onTap: () => Navigator.of(context).pop(),
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.all(
-                                     Radius.circular(15),
-                                  ),
-                                  child: Image.asset(
-                                    _data.image,
-                                    height: double.infinity,
-                                    width: double.infinity,
-                                    alignment: Alignment.topLeft,
-                                    fit: BoxFit.fill,
+                        child: Container(
+                          margin: const EdgeInsets.fromLTRB(15, 5, 15, 30),
+                          decoration: BoxDecoration(
+                            //color: Colors.white.withOpacity(0.0),
+                            borderRadius: const BorderRadius.all(Radius.circular(15)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.8),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset:
+                                const Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Hero(
+                            tag: _data.id,
+                            child: SizedBox(
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                       Radius.circular(15),
+                                    ),
+                                    child: Image.asset(
+                                      _data.image,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      alignment: Alignment.topLeft,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -222,7 +237,7 @@ class DetailsView extends StatelessWidget {
                   Positioned(
                     width: 40,
                     height: 40,
-                    left: sizeWidth - 45,
+                    left: sizeWidth - 70,
                     top: sizeHeight/2+2,
                     child: MouseRegion(
                       cursor: SystemMouseCursors.click,
