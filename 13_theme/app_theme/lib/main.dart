@@ -57,6 +57,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+
         onTap: (currentIndex) {
           _tabController.index = currentIndex;
           setState(() {
@@ -88,7 +89,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             children: <Widget>[
               Text(
                 'Список товаров',
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -150,31 +151,29 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
             ],
           ),
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(
-                spacing: 12,
-                children: [
-                  ..._chips
-                      .map(
-                        (item) => FilterChip(
-                          onSelected: (v) {
-                            setState(() {
-                              item['isSelect'] = v;
-                            });
-                          },
-                          selected: item['isSelect'] as bool,
-                          label: Text("${item['name']}"),
-                        ),
-                      )
-                      .toList(),
-                  const FilterChip(
-                    onSelected: null,
-                    label: Text('City'),
-                  ),
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(
+              spacing: 12,
+              children: [
+                ..._chips
+                    .map(
+                      (item) => FilterChip(
+                        onSelected: (v) {
+                          setState(() {
+                            item['isSelect'] = v;
+                          });
+                        },
+                        selected: item['isSelect'] as bool,
+                        label: Text("${item['name']}"),
+                      ),
+                    )
+                    .toList(),
+                const FilterChip(
+                  onSelected: null,
+                  label: Text('City'),
+                ),
+              ],
             ),
           ),
           Container(
