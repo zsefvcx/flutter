@@ -57,7 +57,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-
         onTap: (currentIndex) {
           _tabController.index = currentIndex;
           setState(() {

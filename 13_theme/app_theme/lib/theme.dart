@@ -17,8 +17,11 @@ ThemeData themeLight = _themeLight.copyWith(
     ),
   ),
   bottomNavigationBarTheme: _bottomNavigationBarThemeData(_themeLight.bottomNavigationBarTheme),
-
+  // iconTheme: IconThemeData(
+  //   color: Colors.deepOrange[100],
+  // ),
   //bottomAppBarTheme: _bottomAppBarTheme(_themeLight.bottomAppBarTheme),
+
 
 
     // primaryColorDark: Colors.deepOrange[100],
@@ -87,10 +90,26 @@ ButtonStyle _buttonStyle(ButtonStyle base){
 
 InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
   return base.copyWith(
+
+    // fillColor: Colors.deepOrange[100],
+    // hoverColor: Colors.deepOrange[100],
+    // iconColor: Colors.deepOrange[100],
+    floatingLabelStyle: TextStyle(
+      color: Colors.deepOrange[100],
+    ),
+    focusColor: Colors.deepOrange[100],
+    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(
+      color: Colors.deepOrange.shade100,
+    )),
+    enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(
+      color: Colors.black54,
+    )),
     labelStyle: const TextStyle(
       color: Colors.black54,
     ),
     suffixIconColor: Colors.black54,
+
+   // fillColor: Colors.deepOrange[100],
 
     border: const OutlineInputBorder(borderSide: BorderSide.none),
 
@@ -114,11 +133,12 @@ ProgressIndicatorThemeData _progressIndicatorThemeData(ProgressIndicatorThemeDat
 ColorScheme _colorScheme(ColorScheme base) {
   return base.copyWith(
     primary: Colors.deepOrange[100],
-    //secondary: Colors.black,
+    secondary: Colors.black54,
     primaryContainer: Colors.deepOrange[100],
     secondaryContainer: Colors.deepOrange[100],
     onSurface: Colors.black54,
     background: Colors.black54,
+
   );
 }
 
