@@ -49,6 +49,23 @@ BottomNavigationBarThemeData _bottomNavigationBarThemeData(BottomNavigationBarTh
   );
 }
 
+TextTheme _textLight(TextTheme base) {
+  return base.copyWith(
+    labelLarge: const TextStyle(color: Colors.black54, fontSize: 16),
+    bodyMedium: const TextStyle(color:  Colors.black54, fontSize: 16),
+  );
+}
+
+ColorScheme _colorScheme(ColorScheme base) {
+  return base.copyWith(
+    background: Colors.white,
+    primary: Colors.deepOrange[100],
+    secondary: Colors.deepOrange[100],
+    secondaryContainer: Colors.deepOrange[100],
+    primaryContainer: Colors.deepOrange[100],
+  );
+}
+
 ChipThemeData _chipThemeData(ChipThemeData base){
   return base.copyWith(
     backgroundColor: Colors.black54,
@@ -95,12 +112,15 @@ ThemeData themeLight = _themeLight.copyWith(
   primaryColorLight: Colors.deepOrange[100],
   primaryColorDark: Colors.deepOrange[100],
 
+  inputDecorationTheme: _inputDecorationTheme(_themeLight.inputDecorationTheme),
+
+
   //
   //
   //
   //
   //
-  // inputDecorationTheme: _inputDecorationTheme(_themeLight.inputDecorationTheme),
+  //
   //
   //
   // iconTheme: IconThemeData(
@@ -180,47 +200,11 @@ InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
     labelStyle: const TextStyle(
       color: Colors.black54,
     ),
-    suffixIconColor: Colors.black54,
+    //suffixIconColor: Colors.black54,
 
    // fillColor: Colors.deepOrange[100],
 
     border: const OutlineInputBorder(borderSide: BorderSide.none),
-
-  );
-}
-
-TextTheme _textLight(TextTheme base) {
-  return base.copyWith(
-    labelLarge: const TextStyle(color: Colors.black54, fontSize: 16),
-    bodyMedium: const TextStyle(color:  Colors.black54, fontSize: 16),
-  );
-}
-
-ColorScheme _colorScheme(ColorScheme base) {
-  return base.copyWith(
-    background: Colors.white,
-    primary: Colors.deepOrange[100],
-    secondary: Colors.deepOrange[100],
-
-    // secondaryContainer: Colors.deepOrange[100],
-    //primaryContainer: Colors.deepOrange[100],
-    // onSecondaryContainer: Colors.black54,
-
-
-    //onPrimary: Colors.deepOrange[100],
-
-
-
-    //background: Colors.deepOrange[100],
-
-
-    // secondary: Colors.black54,
-    //
-    //
-
-    //
-    // onSurface: Colors.deepOrange[100],
-    // background: Colors.black54,
 
   );
 }
