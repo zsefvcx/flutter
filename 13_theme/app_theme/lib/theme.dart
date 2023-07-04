@@ -138,16 +138,9 @@ InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
       color: Colors.black54,
     ),
 
-    //focusColor: Colors.blueAccent,
-
     //suffixIconColor: Colors.black54,
+    //focusColor: Colors.deepOrange[100],
 
-    //
-    // //filled: true,
-    // //fillColor: Colors.deepOrange[100],
-    // //hoverColor: Colors.deepOrange[100],
-    //
-    //
 
   );
 }
