@@ -111,100 +111,43 @@ ThemeData themeLight = _themeLight.copyWith(
 
   primaryColorLight: Colors.deepOrange[100],
   primaryColorDark: Colors.deepOrange[100],
+  scaffoldBackgroundColor: Colors.white,
 
   inputDecorationTheme: _inputDecorationTheme(_themeLight.inputDecorationTheme),
 
-
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  // iconTheme: IconThemeData(
-  //   color: Colors.deepOrange[100],
-  // ),
-  //bottomAppBarTheme: _bottomAppBarTheme(_themeLight.bottomAppBarTheme),
-
-
-
-    // primaryColorDark: Colors.deepOrange[100],
-    // primaryColorLight: Colors.deepOrange[100],
-
-    //primaryColor: Colors.deepOrange[100],
-    //scaffoldBackgroundColor: Colors.deepOrange[100],
-
-    // textButtonTheme: TextButtonThemeData(
-    //   style: ButtonStyle(
-    //     textStyle: TextStyle(
-    //       color: Colors.black54,
-    //       fontSize: 16,
-    //
-    //     ),
-    // ),
-
-    //
-
-    //primaryColor: Colors.deepOrange[100],
-
-    // navigationBarTheme: NavigationBarThemeData(
-    //   indicatorColor: Colors.deepOrange[100],
-    // ),
-
-    // bottomAppBarTheme: BottomAppBarTheme(
-    //   color: Colors.black54,
-    //   shadowColor: Colors.deepOrange[100],
-    //
-    // ),
-
-    //primaryTextTheme: _textLight(_themeLight.textTheme),
-
-    // navigationBarTheme: NavigationBarThemeData (
-    //   shadowColor: Colors.black54,
-    // ),
-
-
+  iconTheme: _themeLight.iconTheme.copyWith(
+    color: Colors.deepOrange[100],
+  ),
 );
-
-// BottomAppBarTheme _bottomAppBarTheme(BottomAppBarTheme base){
-//   return base.copyWith(
-//     color: Colors.black54,
-//     shadowColor: Colors.black54,
-//     shape: const CircularNotchedRectangle(),
-//     elevation: 0,
-//     padding: EdgeInsets.all(10),
-//
-//   );
-// }
-
-
 
 InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
   return base.copyWith(
-
-    // fillColor: Colors.deepOrange[100],
-    // hoverColor: Colors.deepOrange[100],
-    // iconColor: Colors.deepOrange[100],
-    floatingLabelStyle: TextStyle(
-      color: Colors.deepOrange[100],
-    ),
-    focusColor: Colors.deepOrange[100],
     focusedBorder: UnderlineInputBorder(borderSide: BorderSide(
       color: Colors.deepOrange.shade100,
+      width: 2,
     )),
     enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(
       color: Colors.black54,
+      width: 2,
     )),
+    floatingLabelAlignment: FloatingLabelAlignment.start,
+    floatingLabelStyle: TextStyle(
+      color: Colors.deepOrange[100],
+    ),
     labelStyle: const TextStyle(
       color: Colors.black54,
     ),
+
+    //focusColor: Colors.blueAccent,
+
     //suffixIconColor: Colors.black54,
 
-   // fillColor: Colors.deepOrange[100],
-
-    border: const OutlineInputBorder(borderSide: BorderSide.none),
+    //
+    // //filled: true,
+    // //fillColor: Colors.deepOrange[100],
+    // //hoverColor: Colors.deepOrange[100],
+    //
+    //
 
   );
 }
